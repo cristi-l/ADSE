@@ -19,18 +19,23 @@ namespace PSATSim
 				StartInfo =
 				{
 					FileName="psatsim_con.exe",
-					Arguments=" config.xml first.xml -g",
+					Arguments=@" D:\Calc\SOAC\Project\input.xml D:\Calc\SOAC\Project\out.xml -g",
 					WorkingDirectory=@"C:\Program Files (x86)\PSATSim",
 					UseShellExecute = true,
 					CreateNoWindow = true
 				}
 			};
 
+			
+			List<Configuration> c = new List<Configuration>();
+			ConfigurationGenerator cg = new ConfigurationGenerator();
+			for(int i=0;i<8;i++)
+				c.Add(cg.RandomConfig());
+			FileBuilder.WriteXML(c, new List<string> { "compress.tra" }, "..\\..\\..\\input.xml");
 			p.Start();
-			Thread.Sleep(100000);
+			Thread.Sleep(10000);
 			if (!p.HasExited)
 				p.Kill();
-			Configuration c = new Configuration();
 		}
 	}
 }

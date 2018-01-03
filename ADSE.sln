@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADSE", "ADSE\ADSE.csproj", "{FDF8C8B1-0978-411C-9847-F0C9E56BE81D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSATSim", "..\ADSE\PSATSim\PSATSim.csproj", "{08C30DC7-BF20-4A2F-8C77-8479058E65DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSATSim", "PSATSim\PSATSim.csproj", "{08C30DC7-BF20-4A2F-8C77-8479058E65DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -10,6 +10,10 @@ namespace PSATSim
 	{
 		public string Name { get; set; }
 		public Dictionary<string, string> Parameters { get; set; }
+		public Configuration()
+		{
+			Parameters = new Dictionary<string, string>();
+		}
 		public string GetValue(string attribute)
 		{
 			string s = "";
@@ -17,6 +21,10 @@ namespace PSATSim
 				return s;
 			else
 				throw new ArgumentException("key not found");
+		}
+		public void SetValue(string attribute, string value)
+		{
+			Parameters.Add(attribute, value);
 		}
 	}
 }

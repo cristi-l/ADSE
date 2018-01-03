@@ -82,6 +82,7 @@ namespace PSATSim
 
 				}
 			}
+			doc.Save(fileName);
 		}
 	}
 }

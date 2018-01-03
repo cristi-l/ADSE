@@ -1,0 +1,82 @@
+<psatsim>
+  <config name="compress.tra_sim_" number="0">
+    <general superscalar="4" rename="353" reorder="39" rsb_architecture="distributed" rs_per_rsb="2" speculative="true" speculation_accuracy="0.903" separate_dispatch="false" seed="" trace="compress.tra" output="" vdd="2.6" frequency="2" />
+    <execution architecture="standard" integer="2" floating="2" branch="5" memory="4" />
+    <memory architecture="l2">
+      <l1_code hitrate="0.990" latency="1" />
+      <l1_data hitrate="0.970" latency="1" />
+      <l2 hitrate="0.990" latency="3" />
+      <system latency="20" />
+    </memory>
+  </config>
+  <config name="compress.tra_sim_" number="0">
+    <general superscalar="13" rename="243" reorder="159" rsb_architecture="distributed" rs_per_rsb="2" speculative="true" speculation_accuracy="0.995" separate_dispatch="false" seed="" trace="compress.tra" output="" vdd="1.9" frequency="3" />
+    <execution architecture="standard" integer="1" floating="3" branch="6" memory="1" />
+    <memory architecture="l2">
+      <l1_code hitrate="0.990" latency="1" />
+      <l1_data hitrate="0.970" latency="1" />
+      <l2 hitrate="0.990" latency="3" />
+      <system latency="20" />
+    </memory>
+  </config>
+  <config name="compress.tra_sim_" number="0">
+    <general superscalar="6" rename="348" reorder="44" rsb_architecture="hybrid" rs_per_rsb="7" speculative="false" speculation_accuracy="0.923" separate_dispatch="false" seed="" trace="compress.tra" output="" vdd="3.1" frequency="2" />
+    <execution architecture="standard" integer="6" floating="4" branch="2" memory="3" />
+    <memory architecture="l2">
+      <l1_code hitrate="0.990" latency="1" />
+      <l1_data hitrate="0.970" latency="1" />
+      <l2 hitrate="0.990" latency="3" />
+      <system latency="20" />
+    </memory>
+  </config>
+  <config name="compress.tra_sim_" number="0">
+    <general superscalar="2" rename="343" reorder="160" rsb_architecture="distributed" rs_per_rsb="3" speculative="false" speculation_accuracy="0.969" separate_dispatch="false" seed="" trace="compress.tra" output="" vdd="3.0" frequency="2" />
+    <execution architecture="standard" integer="2" floating="6" branch="3" memory="5" />
+    <memory architecture="l2">
+      <l1_code hitrate="0.990" latency="1" />
+      <l1_data hitrate="0.970" latency="1" />
+      <l2 hitrate="0.990" latency="3" />
+      <system latency="20" />
+    </memory>
+  </config>
+  <config name="compress.tra_sim_" number="0">
+    <general superscalar="10" rename="90" reorder="407" rsb_architecture="distributed" rs_per_rsb="7" speculative="true" speculation_accuracy="0.945" separate_dispatch="true" seed="" trace="compress.tra" output="" vdd="2.5" frequency="2" />
+    <execution architecture="standard" integer="2" floating="4" branch="2" memory="7" />
+    <memory architecture="l2">
+      <l1_code hitrate="0.990" latency="1" />
+      <l1_data hitrate="0.970" latency="1" />
+      <l2 hitrate="0.990" latency="3" />
+      <system latency="20" />
+    </memory>
+  </config>
+  <config name="compress.tra_sim_" number="0">
+    <general superscalar="10" rename="448" reorder="27" rsb_architecture="distributed" rs_per_rsb="3" speculative="true" speculation_accuracy="0.950" separate_dispatch="false" seed="" trace="compress.tra" output="" vdd="2.7" frequency="2" />
+    <execution architecture="standard" integer="1" floating="4" branch="3" memory="5" />
+    <memory architecture="l2">
+      <l1_code hitrate="0.990" latency="1" />
+      <l1_data hitrate="0.970" latency="1" />
+      <l2 hitrate="0.990" latency="3" />
+      <system latency="20" />
+    </memory>
+  </config>
+  <config name="compress.tra_sim_" number="0">
+    <general superscalar="14" rename="442" reorder="205" rsb_architecture="centralized" rs_per_rsb="6" speculative="false" speculation_accuracy="0.929" separate_dispatch="true" seed="" trace="compress.tra" output="" vdd="2.7" frequency="3" />
+    <execution architecture="standard" integer="4" floating="3" branch="7" memory="2" />
+    <memory architecture="l2">
+      <l1_code hitrate="0.990" latency="1" />
+      <l1_data hitrate="0.970" latency="1" />
+      <l2 hitrate="0.990" latency="3" />
+      <system latency="20" />
+    </memory>
+  </config>
+  <config name="compress.tra_sim_" number="0">
+    <general superscalar="4" rename="415" reorder="241" rsb_architecture="distributed" rs_per_rsb="1" speculative="true" speculation_accuracy="0.917" separate_dispatch="false" seed="" trace="compress.tra" output="" vdd="2.1" frequency="2" />
+    <execution architecture="standard" integer="4" floating="6" branch="2" memory="2" />
+    <memory architecture="l2">
+      <l1_code hitrate="0.990" latency="1" />
+      <l1_data hitrate="0.970" latency="1" />
+      <l2 hitrate="0.990" latency="3" />
+      <system latency="20" />
+    </memory>
+  </config>
+</psatsim>
