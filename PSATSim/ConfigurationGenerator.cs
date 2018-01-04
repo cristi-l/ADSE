@@ -10,9 +10,9 @@ namespace PSATSim
 	{
 		public static readonly Random random = new Random();
 		public static  List<string> rsb_architecture = new List<string>() {"centralized", "hybrid","distributed" };
-		public static Configuration RandomConfig(int id)
+		public  Configuration RandomConfig(string id)
 		{
-			Configuration c = new Configuration(id.ToString());
+			Configuration c = new Configuration(id);
 
 
 			var superscalar = random.Next(1, 16);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSATSim;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,33 @@ namespace ADSE
         public MainWindow()
         {
             InitializeComponent();
+            PsatSim psatSim = new PsatSim();
+
+            //trebuie selectate din interfata precum si populationCount
+            List<string> selectedTraces = new List<string>
+            {
+                "compress.tra"
+            };
+            //generare configuratii random
+            int populationCount = 8;
+            List<Configuration> configurations = CreateRandomConfigurations(populationCount);
+
+            List<SimulatedConfiguration> simulatedConfig = psatSim.Run(configurations, selectedTraces);
+            
+
         }
+
+        private List<Configuration> CreateRandomConfigurations(int count)
+        {
+            int configurationIndex = 0;
+            ConfigurationGenerator configurationGenerator = new ConfigurationGenerator();
+            var result = new List<Configuration>();
+            for (int i = 0; i < count; i++)
+            {
+                result.Add(configurationGenerator.RandomConfig(string.Format("configuration-{0}", configurationIndex++)));
+            }
+            return result;
+        }
+
     }
 }

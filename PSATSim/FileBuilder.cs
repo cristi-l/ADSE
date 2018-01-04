@@ -22,8 +22,8 @@ namespace PSATSim
 				foreach (var configuration in configurations)
 				{
 					XmlElement configNode = doc.CreateElement("config");
-					configNode.SetAttribute("name", configuration.Name);
-					configNode.SetAttribute("number", 0.ToString("D"));
+					configNode.SetAttribute("name", trace + "_sim_" + configuration.Name);
+                    configNode.SetAttribute("number", 0.ToString("D"));
 					mainNode.AppendChild(configNode);
 
 					XmlElement general = doc.CreateElement("general");
@@ -93,7 +93,8 @@ namespace PSATSim
 				Console.WriteLine(level1.FirstAttribute);
 				SimulatedConfiguration sc = new SimulatedConfiguration();
 				sc.Name = level1.FirstAttribute.Value.ToString();
-				sc.cfg = configurations.First(item => item.Name.Equals(sc.Name));
+                var name = sc.Name.Substring(sc.Name.LastIndexOf('_') + 1);
+                sc.cfg = configurations.First(item => item.Name.Equals(name));
 				foreach (var level2 in level1.Elements())
 				{
 					foreach (var attribute in level2.Attributes())
