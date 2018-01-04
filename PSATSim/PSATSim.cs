@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace PSATSim
 {
-	public class Program
+	public class PSATSim
 	{
-		static void Main(string[] args)
+		public List<SimulatedConfiguration> Run(List<Configuration> configurations,List<string> selectedTraces)
 		{
 			Process p = new Process
 			{
@@ -25,17 +22,10 @@ namespace PSATSim
 					CreateNoWindow = true
 				}
 			};
-
-			
-			List<Configuration> c = new List<Configuration>();
-			ConfigurationGenerator cg = new ConfigurationGenerator();
-			for(int i=0;i<8;i++)
-				c.Add(cg.RandomConfig());
-			FileBuilder.WriteXML(c, new List<string> { "compress.tra" }, "..\\..\\..\\input.xml");
+			FileBuilder.WriteXML(configurations, selectedTraces, @"D:\Calc\SOAC\Project\input.xml");
 			p.Start();
-			Thread.Sleep(10000);
-			if (!p.HasExited)
-				p.Kill();
+			p.WaitForExit();
+			return FileBuilder.ReadXML(configurations, @"D:\Calc\SOAC\Project\out.xml");
 		}
 	}
 }

@@ -9,12 +9,11 @@ namespace PSATSim
 	public class ConfigurationGenerator
 	{
 		public static readonly Random random = new Random();
-		public List<string> rsb_architecture = new List<string>() {"centralized", "hybrid","distributed" };
-		public Configuration RandomConfig()
+		public static  List<string> rsb_architecture = new List<string>() {"centralized", "hybrid","distributed" };
+		public static Configuration RandomConfig(int id)
 		{
-			Configuration c = new Configuration();
+			Configuration c = new Configuration(id.ToString());
 
-			c.SetValue("seed", "");
 
 			var superscalar = random.Next(1, 16);
 			c.SetValue("superscalar", superscalar.ToString());

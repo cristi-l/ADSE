@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace PSATSim
 {
@@ -21,7 +22,7 @@ namespace PSATSim
 				foreach (var configuration in configurations)
 				{
 					XmlElement configNode = doc.CreateElement("config");
-					configNode.SetAttribute("name", trace + "_sim_" + configuration.Name);
+					configNode.SetAttribute("name", configuration.Name);
 					configNode.SetAttribute("number", 0.ToString("D"));
 					mainNode.AppendChild(configNode);
 
@@ -34,7 +35,7 @@ namespace PSATSim
 					general.SetAttribute("speculative", configuration.GetValue("speculative"));
 					general.SetAttribute("speculation_accuracy", configuration.GetValue("speculation_accuracy"));
 					general.SetAttribute("separate_dispatch", configuration.GetValue("separate_dispatch"));
-					general.SetAttribute("seed", configuration.GetValue("seed"));
+					general.SetAttribute("seed", "");
 					general.SetAttribute("trace", trace);
 					general.SetAttribute("output", "");
 					general.SetAttribute("vdd", configuration.GetValue("vdd"));
@@ -83,6 +84,26 @@ namespace PSATSim
 				}
 			}
 			doc.Save(fileName);
+		}
+		public static List<SimulatedConfiguration> ReadXML(List<Configuration> configurations,  string fileName)
+		{
+			List<SimulatedConfiguration> results = new List<SimulatedConfiguration>();
+			foreach (XElement level1 in XElement.Load(fileName).Elements())
+			{
+				Console.WriteLine(level1.FirstAttribute);
+				SimulatedConfiguration sc = new SimulatedConfiguration();
+				sc.Name = level1.FirstAttribute.Value.ToString();
+				sc.cfg = configurations.First(item => item.Name.Equals(sc.Name));
+				foreach (var level2 in level1.Elements())
+				{
+					foreach (var attribute in level2.Attributes())
+					{
+						sc.Values.Add(attribute.Name.ToString(), attribute.Value.ToString());
+					}
+					results.Add(sc);
+				}
+			}
+			return results;
 		}
 	}
 }

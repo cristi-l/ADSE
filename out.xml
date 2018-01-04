@@ -2,282 +2,282 @@
 Running configuration file D:\Calc\SOAC\Project\input.xml with 8 variations -->
 <psatsim_results>
 <variation
-	configuration="compress.tra_sim_" variation="1"
-	started="03 January 2018, 23:10:25" runtime="0.964">
+	configuration="0" variation="1"
+	started="04 January 2018, 13:07:40" runtime="1.117">
 	<general
-		cycles="50321"
-		instructions="116748"
-		fetches="131260"
-		ipc="2.320065"
-		energy="1.32"
-		power="0.0524633">
-		<regfile
-			total="236786"
-			utilization_avg="4.70551"
-			capacitance="0.470644"
-			activity="16680.8"
-			energy="0.0530707"
-			power="0.00210929"
-			power_percent="4.0205" />
-		<resultbus
-			total="119469"
-			utilization_avg="2.37414"
-			capacitance="1.95736"
-			activity="13303"
-			energy="0.176023"
-			power="0.00699599"
-			power_percent="13.335" />
-		<clockbus
-			capacitance="1.67061"
-			activity="50321"
-			energy="0.568292"
-			power="0.0225867"
-			power_percent="43.0524" />
-	</general>
-</variation>
-
-<variation
-	configuration="compress.tra_sim_" variation="1"
-	started="03 January 2018, 23:10:26" runtime="1.109">
-	<general
-		cycles="73030"
-		instructions="116748"
-		fetches="118146"
-		ipc="1.598631"
-		energy="5.40234"
-		power="0.221923">
-		<regfile
-			total="225039"
-			utilization_avg="3.08146"
-			capacitance="3.52049"
-			activity="22849.9"
-			energy="0.290399"
-			power="0.0119293"
-			power_percent="5.37543" />
-		<resultbus
-			total="116819"
-			utilization_avg="1.5996"
-			capacitance="15.4858"
-			activity="16860.9"
-			energy="0.942587"
-			power="0.0387205"
-			power_percent="17.4478" />
-		<clockbus
-			capacitance="3.71409"
-			activity="73030"
-			energy="0.979177"
-			power="0.0402236"
-			power_percent="18.1251" />
-	</general>
-</variation>
-
-<variation
-	configuration="compress.tra_sim_" variation="1"
-	started="03 January 2018, 23:10:27" runtime="0.632">
-	<general
-		cycles="38886"
+		cycles="53604"
 		instructions="116748"
 		fetches="116748"
-		ipc="3.002314"
-		energy="2.01338"
-		power="0.103553">
+		ipc="2.177972"
+		energy="2.03572"
+		power="0.0759542">
 		<regfile
 			total="223744"
-			utilization_avg="5.75384"
+			utilization_avg="4.17402"
+			capacitance="1.17992"
+			activity="30868.7"
+			energy="0.160623"
+			power="0.00599295"
+			power_percent="7.89021" />
+		<resultbus
+			total="116748"
+			utilization_avg="2.17797"
+			capacitance="7.3217"
+			activity="10363.9"
+			energy="0.334636"
+			power="0.0124855"
+			power_percent="16.4382" />
+		<clockbus
+			capacitance="2.456"
+			activity="53604"
+			energy="0.580583"
+			power="0.0216619"
+			power_percent="28.5197" />
+	</general>
+</variation>
+
+<variation
+	configuration="1" variation="1"
+	started="04 January 2018, 13:07:41" runtime="0.703">
+	<general
+		cycles="73014"
+		instructions="116748"
+		fetches="116748"
+		ipc="1.598981"
+		energy="3.87403"
+		power="0.106117">
+		<regfile
+			total="223744"
+			utilization_avg="3.0644"
+			capacitance="0.470644"
+			activity="31791.6"
+			energy="0.101147"
+			power="0.00277061"
+			power_percent="2.61089" />
+		<resultbus
+			total="116748"
+			utilization_avg="1.59898"
+			capacitance="4.51447"
+			activity="16853.5"
+			energy="0.514332"
+			power="0.0140886"
+			power_percent="13.2764" />
+		<clockbus
+			capacitance="2.24841"
+			activity="73014"
+			energy="1.10976"
+			power="0.0303984"
+			power_percent="28.6461" />
+	</general>
+</variation>
+
+<variation
+	configuration="2" variation="1"
+	started="04 January 2018, 13:07:41" runtime="0.844">
+	<general
+		cycles="36630"
+		instructions="116748"
+		fetches="125577"
+		ipc="3.187224"
+		energy="7.12005"
+		power="0.388755">
+		<regfile
+			total="230914"
+			utilization_avg="6.30396"
+			capacitance="1.82378"
+			activity="15863.3"
+			energy="0.26038"
+			power="0.0142168"
+			power_percent="3.657" />
+		<resultbus
+			total="118363"
+			utilization_avg="3.23131"
+			capacitance="16.6264"
+			activity="10320.9"
+			energy="1.5444"
+			power="0.0843241"
+			power_percent="21.6908" />
+		<clockbus
+			capacitance="3.44337"
+			activity="36630"
+			energy="1.13517"
+			power="0.0619806"
+			power_percent="15.9434" />
+	</general>
+</variation>
+
+<variation
+	configuration="3" variation="1"
+	started="04 January 2018, 13:07:42" runtime="0.953">
+	<general
+		cycles="100123"
+		instructions="116748"
+		fetches="116748"
+		ipc="1.166046"
+		energy="13.3444"
+		power="0.26656">
+		<regfile
+			total="223744"
+			utilization_avg="2.23469"
+			capacitance="4.57334"
+			activity="23436.9"
+			energy="0.386938"
+			power="0.00772925"
+			power_percent="2.89963" />
+		<resultbus
+			total="116748"
+			utilization_avg="1.16605"
+			capacitance="29.9699"
+			activity="18094.9"
+			energy="1.95771"
+			power="0.039106"
+			power_percent="14.6706" />
+		<clockbus
+			capacitance="4.5642"
+			activity="100123"
+			energy="1.6497"
+			power="0.0329535"
+			power_percent="12.3625" />
+	</general>
+</variation>
+
+<variation
+	configuration="4" variation="1"
+	started="04 January 2018, 13:07:43" runtime="0.813">
+	<general
+		cycles="101152"
+		instructions="116748"
+		fetches="121035"
+		ipc="1.154184"
+		energy="7.87236"
+		power="0.233481">
+		<regfile
+			total="225981"
+			utilization_avg="2.23407"
 			capacitance="0.91095"
-			activity="11993.9"
-			energy="0.104997"
-			power="0.00540027"
-			power_percent="5.21497" />
+			activity="43736"
+			energy="0.290443"
+			power="0.00861405"
+			power_percent="3.6894" />
 		<resultbus
-			total="116748"
-			utilization_avg="3.00231"
-			capacitance="3.569"
-			activity="10893.5"
-			energy="0.373626"
-			power="0.0192165"
-			power_percent="18.5571" />
+			total="116881"
+			utilization_avg="1.1555"
+			capacitance="7.82703"
+			activity="17128.1"
+			energy="0.977311"
+			power="0.0289854"
+			power_percent="12.4145" />
 		<clockbus
-			capacitance="2.00287"
-			activity="38886"
-			energy="0.74846"
-			power="0.0384951"
-			power_percent="37.1743" />
+			capacitance="2.60786"
+			activity="101152"
+			energy="1.92303"
+			power="0.057034"
+			power_percent="24.4277" />
 	</general>
 </variation>
 
 <variation
-	configuration="compress.tra_sim_" variation="1"
-	started="03 January 2018, 23:10:28" runtime="0.694">
+	configuration="5" variation="1"
+	started="04 January 2018, 13:07:44" runtime="0.812">
 	<general
-		cycles="66270"
+		cycles="53034"
+		instructions="116748"
+		fetches="146452"
+		ipc="2.201380"
+		energy="5.19913"
+		power="0.196068">
+		<regfile
+			total="243986"
+			utilization_avg="4.60056"
+			capacitance="2.19683"
+			activity="24061.4"
+			energy="0.211435"
+			power="0.00797356"
+			power_percent="4.06674" />
+		<resultbus
+			total="119147"
+			utilization_avg="2.24662"
+			capacitance="20.9314"
+			activity="10947.2"
+			energy="0.916561"
+			power="0.034565"
+			power_percent="17.6291" />
+		<clockbus
+			capacitance="3.70536"
+			activity="53034"
+			energy="0.786039"
+			power="0.0296428"
+			power_percent="15.1187" />
+	</general>
+</variation>
+
+<variation
+	configuration="6" variation="1"
+	started="04 January 2018, 13:07:45" runtime="0.860">
+	<general
+		cycles="32220"
 		instructions="116748"
 		fetches="116748"
-		ipc="1.761702"
-		energy="2.10763"
-		power="0.0636074">
+		ipc="3.623464"
+		energy="6.102"
+		power="0.568156">
 		<regfile
 			total="223744"
-			utilization_avg="3.37625"
-			capacitance="0.167745"
-			activity="14916.1"
-			energy="0.0225189"
-			power="0.000679611"
-			power_percent="1.06845" />
+			utilization_avg="6.94426"
+			capacitance="2.60397"
+			activity="15362"
+			energy="0.291615"
+			power="0.0271523"
+			power_percent="4.77901" />
 		<resultbus
 			total="116748"
-			utilization_avg="1.7617"
-			capacitance="1.4091"
-			activity="13194.1"
-			energy="0.167326"
-			power="0.00504983"
-			power_percent="7.93906" />
+			utilization_avg="3.62346"
+			capacitance="23.0051"
+			activity="8752.17"
+			energy="1.4678"
+			power="0.136667"
+			power_percent="24.0544" />
 		<clockbus
-			capacitance="1.55781"
-			activity="66270"
-			energy="0.929127"
-			power="0.0280407"
-			power_percent="44.084" />
+			capacitance="3.86209"
+			activity="32220"
+			energy="0.907142"
+			power="0.0844639"
+			power_percent="14.8663" />
 	</general>
 </variation>
 
 <variation
-	configuration="compress.tra_sim_" variation="1"
-	started="03 January 2018, 23:10:29" runtime="0.864">
+	configuration="7" variation="1"
+	started="04 January 2018, 13:07:46" runtime="1.031">
 	<general
-		cycles="34395"
+		cycles="53876"
 		instructions="116748"
-		fetches="147415"
-		ipc="3.394331"
-		energy="5.68936"
-		power="0.330825">
+		fetches="127498"
+		ipc="2.166976"
+		energy="13.2348"
+		power="0.736957">
 		<regfile
-			total="252439"
-			utilization_avg="7.33941"
-			capacitance="2.19683"
-			activity="13623"
-			energy="0.187047"
-			power="0.0108764"
-			power_percent="3.28766" />
+			total="233132"
+			utilization_avg="4.3272"
+			capacitance="4.57334"
+			activity="18910.1"
+			energy="0.727315"
+			power="0.0404994"
+			power_percent="5.49549" />
 		<resultbus
-			total="122184"
-			utilization_avg="3.55238"
-			capacitance="21.8538"
-			activity="10770.5"
-			energy="1.47111"
-			power="0.0855419"
-			power_percent="25.8572" />
+			total="117179"
+			utilization_avg="2.17498"
+			capacitance="21.8793"
+			activity="14975"
+			energy="2.75547"
+			power="0.153434"
+			power_percent="20.8199" />
 		<clockbus
-			capacitance="3.86752"
-			activity="34395"
-			energy="0.831395"
-			power="0.048344"
-			power_percent="14.6132" />
-	</general>
-</variation>
-
-<variation
-	configuration="compress.tra_sim_" variation="1"
-	started="03 January 2018, 23:10:29" runtime="0.981">
-	<general
-		cycles="53654"
-		instructions="116748"
-		fetches="129822"
-		ipc="2.175942"
-		energy="2.85713"
-		power="0.106502">
-		<regfile
-			total="235694"
-			utilization_avg="4.39285"
-			capacitance="2.19683"
-			activity="22952.3"
-			energy="0.367579"
-			power="0.0137018"
-			power_percent="12.8653" />
-		<resultbus
-			total="117759"
-			utilization_avg="2.19479"
-			capacitance="5.19374"
-			activity="13517.9"
-			energy="0.511821"
-			power="0.0190786"
-			power_percent="17.9138" />
-		<clockbus
-			capacitance="2.47576"
-			activity="53654"
-			energy="0.968365"
-			power="0.0360966"
-			power_percent="33.8929" />
-	</general>
-</variation>
-
-<variation
-	configuration="compress.tra_sim_" variation="1"
-	started="03 January 2018, 23:10:30" runtime="0.869">
-	<general
-		cycles="47690"
-		instructions="116748"
-		fetches="116748"
-		ipc="2.448060"
-		energy="10.2899"
-		power="0.647301">
-		<regfile
-			total="223744"
-			utilization_avg="4.69163"
-			capacitance="4.02987"
-			activity="19147.4"
-			energy="0.562509"
-			power="0.0353853"
-			power_percent="5.4666" />
-		<resultbus
-			total="116748"
-			utilization_avg="2.44806"
-			capacitance="23.4205"
-			activity="11336.1"
-			energy="1.93547"
-			power="0.121753"
-			power_percent="18.8094" />
-		<clockbus
-			capacitance="4.10005"
-			activity="47690"
-			energy="1.42542"
-			power="0.0896681"
-			power_percent="13.8526" />
-	</general>
-</variation>
-
-<variation
-	configuration="compress.tra_sim_" variation="1"
-	started="03 January 2018, 23:10:31" runtime="0.811">
-	<general
-		cycles="62207"
-		instructions="116748"
-		fetches="126736"
-		ipc="1.876766"
-		energy="1.73937"
-		power="0.0559219">
-		<regfile
-			total="232408"
-			utilization_avg="3.73604"
-			capacitance="0.470644"
-			activity="23129.7"
-			energy="0.0480065"
-			power="0.00154344"
-			power_percent="2.76" />
-		<resultbus
-			total="118404"
-			utilization_avg="1.90339"
-			capacitance="3.62312"
-			activity="13832.4"
-			energy="0.221013"
-			power="0.00710573"
-			power_percent="12.7065" />
-		<clockbus
-			capacitance="2.04609"
-			activity="62207"
-			energy="0.56131"
-			power="0.0180465"
-			power_percent="32.271" />
+			capacitance="4.21682"
+			activity="53876"
+			energy="1.91063"
+			power="0.10639"
+			power_percent="14.4364" />
 	</general>
 </variation>
 
