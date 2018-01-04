@@ -96,6 +96,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GeneticAlgorithms\GeneticAlgorithms.csproj">
+      <Project>{59f118fd-7585-4e7e-a78c-906e5269e914}</Project>
+      <Name>GeneticAlgorithms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PSATSim\PSATSim.csproj">
       <Project>{08c30dc7-bf20-4a2f-8c77-8479058e65de}</Project>
       <Name>PSATSim</Name>

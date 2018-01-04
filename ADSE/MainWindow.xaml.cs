@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using GeneticAlgorithms;
 namespace ADSE
 {
     /// <summary>
@@ -29,13 +29,13 @@ namespace ADSE
             //trebuie selectate din interfata precum si populationCount
             List<string> selectedTraces = new List<string>
             {
-                "compress.tra"
-            };
-            //generare configuratii random
-            int populationCount = 8;
-            List<Configuration> configurations = CreateRandomConfigurations(populationCount);
-
-            List<SimulatedConfiguration> simulatedConfig = psatSim.Run(configurations, selectedTraces);
+                "Traces\\compress.tra",
+				"Traces\\applu.tra",
+				"Traces\\epic.tra"
+			};
+			//generare configuratii random
+			GeneticAlgorithms.GeneticAlgorithms ga = new GeneticAlgorithms.GeneticAlgorithms();
+			ga.InitRandomPopulation(selectedTraces);
             
 
         }

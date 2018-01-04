@@ -9,10 +9,12 @@ namespace PSATSim
 		/*public int cycles { get; set; }
 		public int instructions { get; set; }
 		public int fetches { get; set; }
-		public double ipc { get; set; }
+		
 		public double energy { get; set; }
-		public double power { get; set; }
+		
 		*/
 		public string Name { get; set; }
+		public double ipc { get { return double.Parse(Values["ipc"]); }  }
+		public double power { get { return double.Parse(Values["power"]); } }
 	}
 }

@@ -22,7 +22,7 @@ namespace PSATSim
 				foreach (var configuration in configurations)
 				{
 					XmlElement configNode = doc.CreateElement("config");
-					configNode.SetAttribute("name", trace + "_sim_" + configuration.Name);
+					configNode.SetAttribute("name", trace + "_config_" + configuration.Name);
                     configNode.SetAttribute("number", 0.ToString("D"));
 					mainNode.AppendChild(configNode);
 
@@ -44,7 +44,7 @@ namespace PSATSim
 					configNode.AppendChild(general);
 
 					XmlElement execution = doc.CreateElement("execution");
-					execution.SetAttribute("architecture", configuration.GetValue("architecture"));
+					execution.SetAttribute("architecture", "standard");
 					execution.SetAttribute("integer", configuration.GetValue("integer"));
 					execution.SetAttribute("floating", configuration.GetValue("floating"));
 					execution.SetAttribute("branch", configuration.GetValue("branch"));
@@ -53,30 +53,30 @@ namespace PSATSim
 					configNode.AppendChild(execution);
 
 					XmlElement memory = doc.CreateElement("memory");
-					memory.SetAttribute("architecture", configuration.GetValue("mem_architecture"));
+					memory.SetAttribute("architecture", "l2");
 
 					configNode.AppendChild(memory);
 
 					XmlElement l1_code = doc.CreateElement("l1_code");
-					l1_code.SetAttribute("hitrate", configuration.GetValue("l1Code_hitrate"));
-					l1_code.SetAttribute("latency", configuration.GetValue("l1_latency"));
+					l1_code.SetAttribute("hitrate","0.990");
+					l1_code.SetAttribute("latency", "1");
 
 					memory.AppendChild(l1_code);
 
 					XmlElement l1_data = doc.CreateElement("l1_data");
-					l1_data.SetAttribute("hitrate", configuration.GetValue("l1Data_hitrate"));
-					l1_data.SetAttribute("latency", configuration.GetValue("l1_latency"));
+					l1_data.SetAttribute("hitrate", "0.970");
+					l1_data.SetAttribute("latency", "1");
 
 					memory.AppendChild(l1_data);
 
 					XmlElement l2 = doc.CreateElement("l2");
-					l2.SetAttribute("hitrate", configuration.GetValue("l2_hitrate"));
-					l2.SetAttribute("latency", configuration.GetValue("l2_latency"));
+					l2.SetAttribute("hitrate", "0.990");
+					l2.SetAttribute("latency", "3");
 
 					memory.AppendChild(l2);
 
 					XmlElement system = doc.CreateElement("system");
-					system.SetAttribute("latency", configuration.GetValue("sys_latency"));
+					system.SetAttribute("latency", "20");
 
 					memory.AppendChild(system);
 

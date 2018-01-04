@@ -10,6 +10,7 @@ namespace PSATSim
 	{
 		public string Name { get; set; }
 		public Dictionary<string, string> Parameters { get; set; }
+		public Configuration() { }
 		public Configuration(string name)
 		{
 			Parameters = new Dictionary<string, string>();

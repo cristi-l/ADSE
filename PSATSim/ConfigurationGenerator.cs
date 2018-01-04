@@ -33,11 +33,8 @@ namespace PSATSim
 			c.SetValue("floating", random.Next(1, 8).ToString());
 			c.SetValue("branch", random.Next(1, 8).ToString());
 			c.SetValue("memory", random.Next(1, 8).ToString());
-			c.SetValue("architecture", "standard");
-
-			
-
-			
+			//caracteristici constante => le-am mutat in functia care genereaza fisierul
+			/*c.SetValue("architecture", "standard");
 
 			c.SetValue("mem_architecture", "l2");
 
@@ -48,7 +45,8 @@ namespace PSATSim
 			c.SetValue("l2_hitrate", "0.990");
 			c.SetValue("l2_latency", "3");
 
-			c.SetValue("sys_latency", "20");
+			c.SetValue("sys_latency", "20");*/
+			Console.WriteLine(c.Parameters.ElementAt(3));
 			return c;
 		}
 	}
