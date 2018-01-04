@@ -15,7 +15,7 @@ namespace PSATSim
 
         private string WorkingDirectory
         {
-            get { return string.Format("{0}\\PsatSim", Directory.GetCurrentDirectory()); }
+            get {return  Directory.GetCurrentDirectory(); }
         }
         private string Input
         {
