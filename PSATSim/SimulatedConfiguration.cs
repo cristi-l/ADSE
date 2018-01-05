@@ -16,5 +16,6 @@ namespace PSATSim
 		public string Name { get; set; }
 		public double ipc { get { return double.Parse(Values["ipc"]); }  }
 		public double power { get { return double.Parse(Values["power"]); } }
+        public double energy { get { return double.Parse(Values["energy"]); } }
 	}
 }

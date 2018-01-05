@@ -13,6 +13,10 @@ namespace GeneticAlgorithms
 		private int individualID { get { return id++; }  }
 		int populationSize=3;
 		List<Configuration> population=new List<Configuration>();
+
+        List<GeneticIndividual> firstFront = new List<GeneticIndividual>();
+        List<GeneticIndividual> bestIndividuals = new List<GeneticIndividual>();
+
 		static Random r = new Random();
 		public List<Configuration> Crossover(Configuration parent1, Configuration parent2)
 		{
@@ -42,16 +46,20 @@ namespace GeneticAlgorithms
 			var results = sim.Run(population,selectedTraces);
 			for(int i = 0; i < population.Count;i++)
 			{
-				population[i] = new GeneticIndividual(population[i], 0.0, 0.0);
+				population[i] = new GeneticIndividual(population[i], 0.0, 0.0,0.0);
+               
 				for(int j = 0; j < selectedTraces.Count; j++)
 				{
 					((GeneticIndividual)population[i]).Ipc += results[i + population.Count * j].ipc;
 					((GeneticIndividual)population[i]).Power += results[i + population.Count* j].power;
-				}
+                    ((GeneticIndividual)population[i]).Energy += results[i + population.Count * j].energy;
+
+                }
 				if (selectedTraces.Count > 1)
 				{
 					((GeneticIndividual)population[i]).Ipc /= selectedTraces.Count;
 					((GeneticIndividual)population[i]).Power /= selectedTraces.Count;
+                    ((GeneticIndividual)population[i]).Energy /= selectedTraces.Count;
 				}
 			}
 			var v = Crossover(population[1], population[2]);
@@ -60,10 +68,27 @@ namespace GeneticAlgorithms
 		{
 			return child;
 		}
-		public void NSGA2()
-		{
+	
 
-		}
+        public void NSGA2(List<GeneticIndividual> population)
+        {
+            foreach(var individual in population)
+            {
+                individual.FrontNumber = 0;
+                foreach(var otherIndividual in population)
+                {
+                    if (individual != otherIndividual)
+                    {
+                        if ((otherIndividual.Ipc < individual.Ipc && otherIndividual.Energy <= individual.Energy) || (otherIndividual.Ipc <= individual.Ipc && otherIndividual.Energy < individual.Energy))
+                        {
+                            //other individual is better
+                            individual.FrontNumber++;
+                        }
+                    }
+                }
+
+            }
+        }
 
 
 
