@@ -29,6 +29,7 @@ namespace GeneticAlgorithms
 			this.Parameters = configuration.Parameters;
 			this.Ipc = ipc;
 			this.Power = power;
+            this.Energy = energy;
 		}
 	}
 }
