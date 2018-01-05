@@ -26,7 +26,10 @@ namespace PSATSim
 		}
 		public void SetValue(string attribute, string value)
 		{
-			Parameters.Add(attribute, value);
+			if (!Parameters.ContainsKey(attribute))
+				Parameters.Add(attribute, value);
+			else
+				Parameters[attribute] = value;
 		}
 	}
 }
