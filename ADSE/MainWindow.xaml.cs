@@ -29,13 +29,14 @@ namespace ADSE
             //trebuie selectate din interfata precum si populationCount
             List<string> selectedTraces = new List<string>
             {
-                "Traces\\compress.tra",
+				"Traces\\fpppp.tra",
 				"Traces\\applu.tra",
-				"Traces\\epic.tra"
+				"Traces\\toast.tra"
 			};
 			//generare configuratii random
 			GeneticAlgorithms.GeneticAlgorithms ga = new GeneticAlgorithms.GeneticAlgorithms();
 			ga.InitRandomPopulation(selectedTraces);
+			ga.SPEA2();
             
 
         }
