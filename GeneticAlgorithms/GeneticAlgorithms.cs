@@ -9,12 +9,26 @@ namespace GeneticAlgorithms
 {
 	public class GeneticAlgorithms
 	{
-		private  int id=0;
+		private  int id=20;
 		private int individualID { get { return id++; }  }
 		int populationSize=3;
 		List<Configuration> population=new List<Configuration>();
+		static Random r = new Random();
 		public List<Configuration> Crossover(Configuration parent1, Configuration parent2)
 		{
+			Configuration child1 = new Configuration(individualID.ToString());
+			Configuration child2 = new Configuration(individualID.ToString());
+			int cutPoint = r.Next(1, parent1.Parameters.Count - 1);
+			for(int i = 0; i < cutPoint; i++)
+			{
+				child1.Parameters.Add(parent1.Parameters.ElementAt(i).Key, parent1.Parameters.ElementAt(i).Value);
+				child2.Parameters.Add(parent2.Parameters.ElementAt(i).Key, parent2.Parameters.ElementAt(i).Value);
+			}
+			for(int i = cutPoint; i < parent1.Parameters.Count; i++)
+			{
+				child1.Parameters.Add(parent2.Parameters.ElementAt(i).Key, parent2.Parameters.ElementAt(i).Value);
+				child2.Parameters.Add(parent1.Parameters.ElementAt(i).Key, parent1.Parameters.ElementAt(i).Value);
+			}
 			return new List<Configuration> { parent1, parent2 };
 		}
 		public void InitRandomPopulation(List<string> selectedTraces)
@@ -40,6 +54,7 @@ namespace GeneticAlgorithms
 					((GeneticIndividual)population[i]).Power /= selectedTraces.Count;
 				}
 			}
+			var v = Crossover(population[1], population[2]);
 		}
 		public Configuration Mutate(Configuration child)
 		{
