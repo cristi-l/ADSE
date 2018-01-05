@@ -10,6 +10,7 @@ namespace GeneticAlgorithms
 	public class GeneticAlgorithms
 	{
 		private  int id=20;
+		private double mutationRate = 0.01;
 		private int individualID { get { return id++; }  }
 		int populationSize=3;
 		List<Configuration> population=new List<Configuration>();
@@ -55,9 +56,18 @@ namespace GeneticAlgorithms
 				}
 			}
 			var v = Crossover(population[1], population[2]);
+			var m = Mutate(v[0]);
 		}
 		public Configuration Mutate(Configuration child)
 		{
+			ConfigurationGenerator cg = new ConfigurationGenerator();
+			for (int i = 0; i < child.Parameters.Count; i++)
+			{
+				if (r.NextDouble() < mutationRate)
+				{
+					cg.RanomizeParameter(i, child);
+				}
+			}
 			return child;
 		}
 		public void NSGA2()

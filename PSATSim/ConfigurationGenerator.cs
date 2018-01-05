@@ -9,21 +9,21 @@ namespace PSATSim
 	public class ConfigurationGenerator
 	{
 		public static readonly Random random = new Random();
-		public static  List<string> rsb_architecture = new List<string>() {"centralized", "hybrid","distributed" };
-		public  Configuration RandomConfig(string id)
+		public static List<string> rsb_architecture = new List<string>() { "centralized", "hybrid", "distributed" };
+		public Configuration RandomConfig(string id)
 		{
 			Configuration c = new Configuration(id);
 
 
 			var superscalar = random.Next(1, 16);
 			c.SetValue("superscalar", superscalar.ToString());
-			c.SetValue("rename", random.Next(superscalar+1, 512).ToString());
-			c.SetValue("reorder", random.Next(superscalar+1, 512).ToString());
+			c.SetValue("rename", random.Next(superscalar + 1, 512).ToString());
+			c.SetValue("reorder", random.Next(superscalar + 1, 512).ToString());
 
 			c.SetValue("rsb_architecture", rsb_architecture[random.Next(rsb_architecture.Count)]);
 
 			c.SetValue("rs_per_rsb", random.Next(1, 8).ToString());
-			c.SetValue("speculative", (random.Next()%2==0)?"true":"false");
+			c.SetValue("speculative", (random.Next() % 2 == 0) ? "true" : "false");
 			c.SetValue("speculation_accuracy", (0.9 + 0.1 * random.NextDouble()).ToString("F3"));
 			c.SetValue("separate_dispatch", (random.Next() % 2 == 0) ? "true" : "false");
 			c.SetValue("vdd", ((1.8 + 1.5 * random.NextDouble()).ToString("F1")));
@@ -47,6 +47,91 @@ namespace PSATSim
 
 			c.SetValue("sys_latency", "20");*/
 			Console.WriteLine(c.Parameters.ElementAt(3));
+			return c;
+		}
+		public Configuration RanomizeParameter(int parameterIndex, Configuration c)
+		{
+			return RandomizeParameter(c.Parameters.ElementAt(parameterIndex).Key, c);
+		}
+		private Configuration RandomizeParameter(string name, Configuration c)
+		{
+			switch (name)
+			{
+				case "superscalar":
+				{
+					var superscalar = random.Next(1, 16);
+					c.SetValue("superscalar", superscalar.ToString());
+				}
+				break;
+				case "rename":
+				{
+					c.SetValue("rename", random.Next(int.Parse(c.GetValue("superscalar")) + 1, 512).ToString());
+				}
+				break;
+				case "reorder":
+				{
+					c.SetValue("reorder", random.Next(int.Parse(c.GetValue("superscalar")) + 1, 512).ToString());
+				}
+				break;
+				case "rsb_architecture":
+				{
+					c.SetValue("rsb_architecture", rsb_architecture[random.Next(rsb_architecture.Count)]);
+				}
+				break;
+				case "rs_per_rsb":
+				{
+					c.SetValue("rs_per_rsb", random.Next(1, 8).ToString());
+				}
+				break;
+				case "speculative":
+				{
+					c.SetValue("speculative", (random.Next() % 2 == 0) ? "true" : "false");
+				}
+				break;
+				case "speculation_accuracy":
+				{
+					c.SetValue("speculation_accuracy", (0.9 + 0.1 * random.NextDouble()).ToString("F3"));
+				}
+				break;
+				case "separate_dispatch":
+				{
+					c.SetValue("separate_dispatch", (random.Next() % 2 == 0) ? "true" : "false");
+				}
+				break;
+				case "vdd":
+				{
+					c.SetValue("vdd", ((1.8 + 1.5 * random.NextDouble()).ToString("F1")));
+				}
+				break;
+				case "frequency":
+				{
+					c.SetValue("frequency", ((int)(1.8 + 1.5 * random.NextDouble())).ToString());
+				}
+				break;
+				case "integer":
+				{
+					c.SetValue("integer", random.Next(1, 8).ToString());
+				}
+				break;
+				case "floating":
+				{
+					c.SetValue("floating", random.Next(1, 8).ToString());
+				}
+				break;
+				case "branch":
+				{
+					c.SetValue("branch", random.Next(1, 8).ToString());
+				}
+				break;
+				case "memory":
+				{
+					c.SetValue("memory", random.Next(1, 8).ToString());
+				}
+
+				break;
+				default:
+				break;
+			}
 			return c;
 		}
 	}
