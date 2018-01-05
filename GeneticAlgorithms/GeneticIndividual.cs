@@ -11,8 +11,10 @@ namespace GeneticAlgorithms
 	{
 		public double Ipc { get; set; }
 		public double Power { get; set; }
+        public double Energy { get; set; }
 		public double Fitness { get; set; }
 		public double Strength { get; set; }
+        public int FrontNumber { get; set; }
 		public GeneticIndividual(string name) : base(name)
 		{
 		}
@@ -21,12 +23,13 @@ namespace GeneticAlgorithms
 
 		}
 
-		public GeneticIndividual(Configuration configuration, double ipc, double power)
+		public GeneticIndividual(Configuration configuration, double ipc, double power,double energy)
 		{
 			this.Name = configuration.Name;
 			this.Parameters = configuration.Parameters;
 			this.Ipc = ipc;
 			this.Power = power;
+            this.Energy = energy;
 		}
 	}
 }

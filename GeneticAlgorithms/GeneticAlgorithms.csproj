@@ -49,7 +49,6 @@
     <Compile Include="GeneticAlgorithms.cs" />
     <Compile Include="GeneticIndividual.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SolutionParamethers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
