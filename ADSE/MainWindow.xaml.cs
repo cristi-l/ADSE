@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GeneticAlgorithms;
+using InteractiveDataDisplay.WPF;
 namespace ADSE
 {
     /// <summary>
@@ -21,21 +22,26 @@ namespace ADSE
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+
+		GeneticAlgorithms.GeneticAlgorithms ga;
+		double[] x, y;
+		List<string> selectedTraces = new List<string>
+			{
+				"Traces\\fpppp.tra",
+				//"Traces\\applu.tra",
+				//"Traces\\toast.tra"
+			};
+		public MainWindow()
         {
             InitializeComponent();
             PsatSim psatSim = new PsatSim();
 
             //trebuie selectate din interfata precum si populationCount
-            List<string> selectedTraces = new List<string>
-            {
-                "Traces\\compress.tra",
-				"Traces\\applu.tra",
-				"Traces\\epic.tra"
-			};
+           
 			//generare configuratii random
-			GeneticAlgorithms.GeneticAlgorithms ga = new GeneticAlgorithms.GeneticAlgorithms(selectedTraces);
-			ga.InitRandomPopulation(selectedTraces);
+			ga = new GeneticAlgorithms.GeneticAlgorithms(selectedTraces);
+			//ga.InitRandomPopulation(selectedTraces);
+			//ga.SPEA2();
             
 
         }
@@ -52,5 +58,32 @@ namespace ADSE
             return result;
         }
 
-    }
+		private void button_Click(object sender, RoutedEventArgs e)
+		{
+			ga.SPEA2();
+			x = new double[ga.population.Count];
+			y = new double[ga.population.Count];
+			for (int i = 0; i < ga.population.Count; i++)
+			{
+				x[i] = ((GeneticIndividual)ga.population[i]).Ipc;
+				y[i] = ((GeneticIndividual)ga.population[i]).Energy;
+			}
+			arch.PlotXY(x, y);
+		}
+
+		private void button1_Click(object sender, RoutedEventArgs e)
+		{
+			button1.IsEnabled = false;
+			ga.InitRandomPopulation(selectedTraces);
+			x = new double[ga.population.Count];
+			y = new double[ga.population.Count];
+			for (int i = 0; i < ga.population.Count; i++)
+			{
+				x[i] = ((GeneticIndividual)ga.population[i]).Ipc;
+				y[i] = ((GeneticIndividual)ga.population[i]).Energy;
+			}
+			arch.PlotXY(x, y);
+			
+		}
+	}
 }

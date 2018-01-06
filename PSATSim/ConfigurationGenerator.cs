@@ -49,7 +49,7 @@ namespace PSATSim
 			Console.WriteLine(c.Parameters.ElementAt(3));
 			return c;
 		}
-		public Configuration RanomizeParameter(int parameterIndex, Configuration c)
+		public Configuration RandomizeParameter(int parameterIndex, Configuration c)
 		{
 			return RandomizeParameter(c.Parameters.ElementAt(parameterIndex).Key, c);
 		}
