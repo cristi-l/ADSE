@@ -85,7 +85,7 @@ namespace GeneticAlgorithms
             // var v = Crossover(population[1], population[2]);
             // var m = Mutate(v[0]);
             for (int i = 0; i < noOfGenerations; i++) {
-                NSGA2(nsgaPopulation);
+                NSGA2(nsgaPopulation, i);
            }
             StoreResults();
           
@@ -109,15 +109,15 @@ namespace GeneticAlgorithms
             {
                 if (r.NextDouble() < mutationRate)
                 {
-                    cg.RandomizeParameter(i, child);
+                    cg.RanomizeParameter(i, child);
                 }
             }
             return child;
         }
-      
 
 
-        public void NSGA2(List<GeneticIndividual> population)
+
+        public void NSGA2(List<GeneticIndividual> population, int currentGeneration)
         {
             Clear();
             foreach (var individual in population)
@@ -192,20 +192,21 @@ namespace GeneticAlgorithms
                             if ((bestIndividual.Name.Substring(bestIndividual.Name.LastIndexOf('_') + 1)).Equals(individual.Name))
                             {
                                 configuration = individual;
+                                break;
                             }
                         }
 
                         Configuration mutatedConfiguration = Mutate((Configuration)configuration.Clone());
-                      
-                        
+
                         mutatedConfiguration.Name = id.ToString();
                         id++;
-                        allConfigurations.Add((Configuration)mutatedConfiguration);
-                        
+                        allConfigurations.Add(mutatedConfiguration);
+
                         //rulare simulator doar pt mutatedConfiguration
-                        var newSimulatedConfigurations=sim.Run(new List<Configuration> { mutatedConfiguration }, selectedTraces);
+                        Console.WriteLine("gen: {0} mutated configuration ", currentGeneration);
+                        var newSimulatedConfigurations = sim.Run(new List<Configuration> { mutatedConfiguration }, selectedTraces);
                         double ipc_average = 0, power_average = 0, energy_average = 0;
-                        foreach(var item in newSimulatedConfigurations)
+                        foreach (var item in newSimulatedConfigurations)
                         {
                             ipc_average += item.ipc;
                             power_average += item.power;
@@ -225,78 +226,71 @@ namespace GeneticAlgorithms
                         Console.WriteLine(e.Message);
 
                     }
+                }
+            }
+            int length = firstFront.Count;
 
-                    int length = firstFront.Count;
+            int numberOfConfigurations = allConfigurations.Count;
+            //nu stiu sigur daca populationSize,trebuie revazut
+            //se face crossover
+            while (nsgaPopulation.Count < numberOfConfigurations)
+            {
+                int index_parent1, index_parent2;
+                int count = 10;
 
-                    int numberOfConfigurations = allConfigurations.Count;
-                    //nu stiu sigur daca populationSize,trebuie revazut
-                    //se face crossover
-                    while (nsgaPopulation.Count < numberOfConfigurations)
+                do
+                {
+                    index_parent1 = random.Next(0, bestIndividuals.Count);
+                    index_parent2 = random.Next(0, bestIndividuals.Count);
+                    count--;
+                } while (index_parent1 == index_parent2 && count != 0);
+                if (bestIndividuals.Count > 1)
+                {
+                    if (count == 0)
                     {
-                        int index_parent1, index_parent2;
-                        int count = 10;
+                        index_parent1 = bestIndividuals.Count - 1;
+                        index_parent2 = bestIndividuals.Count - 2;
+                    }
 
-                        do
+                    Configuration parent1 = bestIndividuals[index_parent1];
+                    Configuration parent2 = bestIndividuals[index_parent2];
+
+                    List<Configuration> resultedConfigurations = Crossover(parent1, parent2);
+                    allConfigurations.AddRange(resultedConfigurations);
+
+                    Console.WriteLine("gen: {0} crossover configurations", currentGeneration);
+                    var newSimulatedConfigurations = sim.Run(resultedConfigurations, selectedTraces);
+
+                    foreach (var cfg in resultedConfigurations)
+                    {
+                        if (nsgaPopulation.Count < numberOfConfigurations)
                         {
-                            index_parent1 = random.Next(0, bestIndividuals.Count );
-                            index_parent2 = random.Next(0, bestIndividuals.Count );
-                            count--;
-                        } while (index_parent1 == index_parent2 && count!=0);
-                        if (bestIndividuals.Count > 1)
-                        {
-                            if (count == 0)
+                            double ipc_average = 0, power_average = 0, energy_average = 0;
+                            int ct = 0;
+                            foreach (var item in newSimulatedConfigurations)
                             {
-                                index_parent1 = bestIndividuals.Count - 1;
-                                index_parent2 = bestIndividuals.Count - 2;
-                            }
-
-                            Configuration parent1 = bestIndividuals[index_parent1];
-                            Configuration parent2 = bestIndividuals[index_parent2];
-
-                            List<Configuration> resultedConfigurations = Crossover(parent1, parent2);
-                            allConfigurations.AddRange(resultedConfigurations);
-                            var newSimulatedConfigurations = sim.Run(resultedConfigurations, selectedTraces);
-
-                            List<Configuration> simulatedCfgs = new List<Configuration>();
-
-                            foreach (var simulatedConfiguration in newSimulatedConfigurations)
-                            {
-                                if (!simulatedCfgs.Contains(simulatedConfiguration.cfg))
+                                if (item.cfg == cfg)
                                 {
-                                    simulatedCfgs.Add(simulatedConfiguration.cfg);
+                                    ipc_average += item.ipc;
+                                    power_average += item.power;
+                                    energy_average += item.energy;
+                                    ct++;
                                 }
                             }
-                            
-                            foreach(var cfg in simulatedCfgs)
-                            {
-                                double ipc_average = 0, power_average = 0, energy_average = 0;
-                                int ct = 0;
-                                foreach (var item in newSimulatedConfigurations)
-                                {
-                                    if (item.cfg == cfg)
-                                    {
-                                        ipc_average += item.ipc;
-                                        power_average += item.power;
-                                        energy_average += item.energy;
-                                        ct++;
-                                    }
-                                }
-                                ipc_average /= ct;
-                                power_average /= ct;
-                                energy_average /= ct;
-                                GeneticIndividual tempIndividual = new GeneticIndividual(cfg, ipc_average, power_average, energy_average);
-                                nsgaPopulation.Add(tempIndividual);
-                            }
-                            
-                            3.ToString();  
-                     
+                            ipc_average /= ct;
+                            power_average /= ct;
+                            energy_average /= ct;
+                            GeneticIndividual tempIndividual = new GeneticIndividual(cfg, ipc_average, power_average, energy_average);
+                            nsgaPopulation.Add(tempIndividual);
                         }
                     }
 
+                    3.ToString();
+
                 }
             }
-
         }
+
 
         private void Clear()
         {
