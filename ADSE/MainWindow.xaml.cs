@@ -39,7 +39,7 @@ namespace ADSE
             //trebuie selectate din interfata precum si populationCount
            
 			//generare configuratii random
-			ga = new GeneticAlgorithms.GeneticAlgorithms();
+			ga = new GeneticAlgorithms.GeneticAlgorithms(selectedTraces);
 			//ga.InitRandomPopulation(selectedTraces);
 			//ga.SPEA2();
             
