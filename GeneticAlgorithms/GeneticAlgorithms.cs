@@ -20,7 +20,7 @@ namespace GeneticAlgorithms
         public SimulationResults simulationResults;
         private List<string> selectedTraces;
         private int individualID { get { return id++; } }
-        int populationSize = 20;
+        int populationSize = 12;
         int noOfGenerations = 2;
         public List<Configuration> population = new List<Configuration>();
 
@@ -74,7 +74,7 @@ namespace GeneticAlgorithms
 
                 for (int j = 0; j < selectedTraces.Count; j++)
                 {
-                    ((GeneticIndividual)population[i]).Ipc += results[i + population.Count * j].ipc;
+                    ((GeneticIndividual)population[i]).Ipc += 1.0/results[i + population.Count * j].ipc;
                     ((GeneticIndividual)population[i]).Power += results[i + population.Count * j].power;
                     ((GeneticIndividual)population[i]).Energy += results[i + population.Count * j].energy;
 
@@ -251,7 +251,7 @@ namespace GeneticAlgorithms
                         GeneticIndividual tempIndividual = new GeneticIndividual(mutatedConfiguration, ipc_average, power_average, energy_average);
                         nsgaPopulation.Add(tempIndividual);
 
-                        Thread.Sleep(20);
+                       // Thread.Sleep(20);
                     }
                     catch (Exception e)
                     {
@@ -335,18 +335,23 @@ namespace GeneticAlgorithms
         //http://www.cleveralgorithms.com/nature-inspired/evolution/spea.html
         public void SPEA2()
         {
+			if (newPopulation.Count > 0)
+			{
+				population.Clear();
+				population.AddRange(newPopulation);
+			}
+			CalculateObjectives();
+			firstFront.Clear();
             SPEA2Fitness();
             archive = EnvironmentalSelection(population, archive, populationSize / 2);
 
-            List<GeneticIndividual> selected = new List<GeneticIndividual>();
-            while (selected.Count < populationSize / 2)
-                selected.Add(BinaryTournament(archive));
-            population.Clear();
-            population.AddRange(Reproduce(selected));
-            CalculateObjectives();
+           
+            //population.Clear();
+            newPopulation=Reproduce(archive);
+			
 
-        }
-
+		}
+		List<Configuration> newPopulation = new List<Configuration>();
         private List<Configuration> Reproduce(List<GeneticIndividual> selected)
         {
             List<Configuration> children = new List<Configuration>();
@@ -380,28 +385,33 @@ namespace GeneticAlgorithms
         private List<GeneticIndividual> EnvironmentalSelection(List<Configuration> population, List<GeneticIndividual> archive, int archiveSize)
         {
             List<GeneticIndividual> newArchive = new List<GeneticIndividual>();
-            List<Configuration> union = population.Concat(archive).OrderBy(c => ((GeneticIndividual)c).Fitness).ToList();
+            List<Configuration> union = population.Concat(archive).ToList();
+			firstFront.Clear();
             foreach (var item in union)
             {
                 //adaug frontol ne-dominat
                 if (((GeneticIndividual)item).Fitness < 1)
                 {
+					firstFront.Add((GeneticIndividual)item);
                     newArchive.Add((GeneticIndividual)item);
                 }
             }
 
-            if (newArchive.Count < archiveSize)
+			if (newArchive.Count == archiveSize)
+				return newArchive;
+			if (newArchive.Count < archiveSize)
             {
+				union = union.OrderBy(c => ((GeneticIndividual)c).Fitness).ToList();
                 foreach (var item in union)
                 {
                     if (((GeneticIndividual)item).Fitness >= 1.0)
                     {
                         newArchive.Add((GeneticIndividual)item);
                     }
-                    if (newArchive.Count >= archiveSize)
+                    if (newArchive.Count == archiveSize)
                         break;
                 }
-                return newArchive.Take(archiveSize).ToList();
+                return newArchive;
             }
             else
             {
@@ -412,7 +422,8 @@ namespace GeneticAlgorithms
                     {
                         foreach (var p2 in newArchive)
                         {
-                            p2.distance = EuclideanDistance(p1, p2);
+							if(p1!=p2)
+								p2.distance = EuclideanDistance(p1, p2);
                         }
                         var list = newArchive.OrderBy(c => c.distance).ToArray();
                         p1.Density = list[k].distance;
@@ -430,7 +441,7 @@ namespace GeneticAlgorithms
             calculateRawFitness(union);
             foreach (var individual in union)
             {
-                ((GeneticIndividual)individual).Density = Calculatedensity((GeneticIndividual)individual, union);
+                ((GeneticIndividual)individual).Density = CalculateDensity((GeneticIndividual)individual, union);
                 ((GeneticIndividual)individual).Fitness = ((GeneticIndividual)individual).R + ((GeneticIndividual)individual).Density;
             }
         }
@@ -444,11 +455,8 @@ namespace GeneticAlgorithms
                 foreach (var other in union)
                 {
                     if (individual != other)
-                        if ((((GeneticIndividual)other).Ipc > ((GeneticIndividual)individual).Ipc &&
-                                ((GeneticIndividual)other).Energy >= ((GeneticIndividual)individual).Energy) ||
-                                (((GeneticIndividual)other).Ipc >= ((GeneticIndividual)individual).Ipc &&
-                                ((GeneticIndividual)other).Energy > ((GeneticIndividual)individual).Energy))
-                        {//individual domina, are .Strength indivizi pe care ii domina
+                        if (Dominates((GeneticIndividual)individual, (GeneticIndividual)other) > 0)
+						{//individual domina, are .Strength indivizi pe care ii domina
                             ((GeneticIndividual)individual).Strength++;
                         }
                 }
@@ -459,20 +467,18 @@ namespace GeneticAlgorithms
                 foreach (var other in union)
                 {
                     if (individual != other)
-                        if ((((GeneticIndividual)other).Ipc < ((GeneticIndividual)individual).Ipc &&
-                                ((GeneticIndividual)other).Energy <= ((GeneticIndividual)individual).Energy) ||
-                                (((GeneticIndividual)other).Ipc <= ((GeneticIndividual)individual).Ipc &&
-                                ((GeneticIndividual)other).Energy < ((GeneticIndividual)individual).Energy))
+                        if (Dominates((GeneticIndividual)individual,(GeneticIndividual)other)<0)
                         {//individual este dominat, este dominat de .Fitness indivizi
                             ((GeneticIndividual)individual).R += ((GeneticIndividual)other).Strength;
                         }
                 }
             }
         }
-        public double Calculatedensity(GeneticIndividual individual, List<Configuration> pop)
+        public double CalculateDensity(GeneticIndividual individual, List<Configuration> pop)
         {
             foreach (var other in pop)
             {
+				if(individual!=other)
                 ((GeneticIndividual)other).distance = EuclideanDistance(((GeneticIndividual)individual), (GeneticIndividual)other);
             }
             var sorted = pop.OrderBy(c => (((GeneticIndividual)c).distance)).ToArray();
@@ -494,7 +500,7 @@ namespace GeneticAlgorithms
 
                 for (int j = 0; j < selectedTraces.Count; j++)
                 {
-                    ((GeneticIndividual)population[i]).Ipc += results[i + population.Count * j].ipc;
+                    ((GeneticIndividual)population[i]).Ipc += 1.0/results[i + population.Count * j].ipc;
                     ((GeneticIndividual)population[i]).Power += results[i + population.Count * j].power;
                     ((GeneticIndividual)population[i]).Energy += results[i + population.Count * j].energy;
 
@@ -507,5 +513,13 @@ namespace GeneticAlgorithms
                 }
             }
         }
+		public int Dominates(GeneticIndividual ind1, GeneticIndividual ind2)
+		{
+			if (ind1.Energy < ind2.Energy  && ind1.Ipc < ind2.Ipc)
+				return 1;
+			if (ind1.Energy >= ind2.Energy && ind1.Ipc >= ind2.Ipc)
+				return -1;
+			return 0;
+		}
     }
 }

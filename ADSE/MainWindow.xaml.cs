@@ -62,16 +62,25 @@ namespace ADSE
 
 		private void button_Click(object sender, RoutedEventArgs e)
 		{
-            ga.SPEA2();
+			ga.SPEA2();
 			x = new double[ga.population.Count];
 			y = new double[ga.population.Count];
 			for (int i = 0; i < ga.population.Count; i++)
 			{
-				x[i] = ((GeneticIndividual)ga.population[i]).Ipc;
+				x[i] =	((GeneticIndividual)ga.population[i]).Ipc;
 				y[i] = ((GeneticIndividual)ga.population[i]).Energy;
 			}
-			arch.PlotXY(x, y);
-        }
+			population.PlotXY(x, y);
+			x = new double[ga.firstFront.Count];
+			y = new double[ga.firstFront.Count];
+			for (int i = 0; i < ga.firstFront.Count; i++)
+			{
+				x[i] = ((GeneticIndividual)ga.firstFront[i]).Ipc;
+				y[i] = ((GeneticIndividual)ga.firstFront[i]).Energy;
+			}
+			best.PlotXY(x, y);
+			
+		}
 
         private void button2_Click(object sender, RoutedEventArgs e)
         {
@@ -87,7 +96,7 @@ namespace ADSE
                 x[i] = (1.0/(ga.simulationResults.nsgaPopulation[i]).Ipc);
                 y[i] = (ga.simulationResults.nsgaPopulation[i]).Energy;
             }
-            arch.PlotXY(x, y);
+            population.PlotXY(x, y);
 
             x = new double[ga.simulationResults.firstFront.Count];
             y = new double[ga.simulationResults.firstFront.Count];
@@ -96,7 +105,7 @@ namespace ADSE
                 x[i] = (1.0 / (ga.simulationResults.firstFront[i]).Ipc);
                 y[i] = (ga.simulationResults.firstFront[i]).Energy;
             }
-            first.PlotXY(x, y);
+            best.PlotXY(x, y);
 
             //x = new double[ga.simulationResults.bestIndividuals.Count];
             //y = new double[ga.simulationResults.bestIndividuals.Count];
@@ -119,7 +128,7 @@ namespace ADSE
 				x[i] = ((GeneticIndividual)ga.population[i]).Ipc;
 				y[i] = ((GeneticIndividual)ga.population[i]).Energy;
 			}
-			arch.PlotXY(x, y);
+			best.PlotXY(x, y);
         }
 	}
 }
