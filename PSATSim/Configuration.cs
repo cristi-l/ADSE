@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PSATSim
 {
-	public class Configuration
+	public class Configuration:ICloneable
 	{
 		public string Name { get; set; }
 		public Dictionary<string, string> Parameters { get; set; }
@@ -31,5 +31,10 @@ namespace PSATSim
 			else
 				Parameters[attribute] = value;
 		}
-	}
+
+        public object Clone()
+        {
+           return this.MemberwiseClone();
+        }
+    }
 }
