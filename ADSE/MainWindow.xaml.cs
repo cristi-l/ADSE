@@ -34,7 +34,7 @@ namespace ADSE
 				"Traces\\epic.tra"
 			};
 			//generare configuratii random
-			GeneticAlgorithms.GeneticAlgorithms ga = new GeneticAlgorithms.GeneticAlgorithms();
+			GeneticAlgorithms.GeneticAlgorithms ga = new GeneticAlgorithms.GeneticAlgorithms(selectedTraces);
 			ga.InitRandomPopulation(selectedTraces);
             
 
