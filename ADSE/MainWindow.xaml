@@ -4,9 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ADSE"
+        xmlns:d3="clr-namespace:InteractiveDataDisplay.WPF;assembly=InteractiveDataDisplay.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="MainWindow" Height="545" Width="1086">
+    <Grid Margin="0,0,0,0">
+        <d3:Chart x:Name="myChart" Margin="100,5,0,10" HorizontalAlignment="Left" Width="968">
+            <d3:Chart.Title>
+                <TextBlock HorizontalAlignment="Center" FontSize="18" Margin="0,5,0,5">Markers sample</TextBlock>
+            </d3:Chart.Title>
+            <d3:Plot>
+                <d3:CircleMarkerGraph Name="arch" Description="ipc"
+                                  ColorDescription="energy" SizeDescription="Age" Min="1" Max="20"/>
+                <d3:DiamondMarkerGraph Name="pop" Description="Population" ColorDescription="Population" SizeDescription="Age" Min="1" Max="20"/>
+            </d3:Plot>
+        </d3:Chart>
+        <Button Click="button_Click" x:Name="button" Content="Next Generation"  HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" Width="90" Height="47"/>
+        <Button Click="button1_Click" x:Name="button1" Content="init" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Width="90" Height="38"/>
     </Grid>
 </Window>

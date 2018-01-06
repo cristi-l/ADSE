@@ -13,11 +13,11 @@ namespace GeneticAlgorithms
 		private double mutationRate = 0.3;
 		private int individualID { get { return id++; } }
 		int populationSize = 10;
-		List<Configuration> population = new List<Configuration>();
+		public List<Configuration> population = new List<Configuration>();
 
 		List<GeneticIndividual> firstFront = new List<GeneticIndividual>();
 		List<GeneticIndividual> bestIndividuals = new List<GeneticIndividual>();
-		List<GeneticIndividual> archive = new List<GeneticIndividual>();
+		public List<GeneticIndividual> archive = new List<GeneticIndividual>();
 		List<SimulatedConfiguration> results = new List<SimulatedConfiguration>();
 		List<string> selectedTraces = new List<string>();
 
@@ -96,23 +96,22 @@ namespace GeneticAlgorithms
 
 
 
-		int t = 0;
+
 
 
 		//http://www.cleveralgorithms.com/nature-inspired/evolution/spea.html
 		public void SPEA2()
-		{
-			do
-			{
+		{			
 				SPEA2Fitness();
 				archive = EnvironmentalSelection(population, archive, populationSize / 2);
 
 				List<GeneticIndividual> selected = new List<GeneticIndividual>();
 				while (selected.Count < populationSize / 2)
 					selected.Add(BinaryTournament(archive));
-				population = Reproduce(selected);
+				population.Clear();
+				population.AddRange( Reproduce(selected));
 				CalculateObjectives();
-			} while (t++ < 10);
+			
 		}
 
 		private List<Configuration> Reproduce(List<GeneticIndividual> selected)
@@ -126,10 +125,10 @@ namespace GeneticAlgorithms
 			{
 				int i = r.Next(selected.Count);
 				int j = r.Next(selected.Count);
-				if(i!=j)
-				children.AddRange(Crossover(selected[i], selected[j]));
+				if (i != j)
+					children.AddRange(Crossover(selected[i], selected[j]));
 			}
-			for(int i=0;i<children.Count;i++)
+			for (int i = 0; i < children.Count; i++)
 			{
 				children[i] = Mutate(children[i]);
 			}
@@ -140,7 +139,7 @@ namespace GeneticAlgorithms
 		{
 			int i = r.Next(archive.Count);
 			int j = r.Next(archive.Count);
-			while(i==j)
+			while (i == j)
 				j = r.Next(archive.Count);
 			return (archive[i].Fitness > archive[j].Fitness ? archive[j] : archive[i]);
 		}
