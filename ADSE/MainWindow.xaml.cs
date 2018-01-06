@@ -74,14 +74,23 @@ namespace ADSE
         private void button2_Click(object sender, RoutedEventArgs e)
         {
             ga.NSGA2(ga.nsgaPopulation, 0);
-            x = new double[ga.simulationResults.bestIndividuals.Count];
-            y = x;
-            for (int i = 0; i < ga.simulationResults.bestIndividuals.Count; i++)
+            x = new double[ga.simulationResults.nsgaPopulation.Count];
+            y = new double[ga.simulationResults.nsgaPopulation.Count];
+            for (int i = 0; i < ga.simulationResults.nsgaPopulation.Count; i++)
             {
-                x[i] = 1.0/(ga.simulationResults.bestIndividuals[i]).Ipc;
-                y[i] = (ga.simulationResults.bestIndividuals[i]).Energy;
+                x[i] = (ga.simulationResults.nsgaPopulation[i]).Ipc;
+                y[i] = (ga.simulationResults.nsgaPopulation[i]).Energy;
             }
             arch.PlotXY(x, y);
+
+            x = new double[ga.simulationResults.bestIndividuals.Count];
+            y = new double[ga.simulationResults.bestIndividuals.Count];
+            for (int i = 0; i < ga.simulationResults.bestIndividuals.Count; i++)
+            {
+                x[i] = (ga.simulationResults.bestIndividuals[i]).Ipc;
+                y[i] = (ga.simulationResults.bestIndividuals[i]).Energy;
+            }
+            best.Plot(x, y);
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)

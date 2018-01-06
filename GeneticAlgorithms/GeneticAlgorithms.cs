@@ -113,6 +113,15 @@ namespace GeneticAlgorithms
         public void NSGA2(List<GeneticIndividual> population, int currentGeneration)
         {
             Clear();
+            FindBestIndividuals(population);
+            KeepNondominatedIndividuals();
+            DoMutationAndSimulation();
+            DoCrossoverForBestIndividuals();
+            StoreResults();
+        }
+
+        private void FindBestIndividuals(List<GeneticIndividual> population)
+        {
             foreach (var individual in population)
             {
                 individual.FrontNumber = 0;
@@ -170,9 +179,9 @@ namespace GeneticAlgorithms
                     break;
                 }
             }
-            //pastreaza doar indivizii de pe primele fronturi(0,1,2)
-            KeepNondominatedIndividuals();
-
+        }
+        private void DoMutationAndSimulation()
+        {
             foreach (var bestIndividual in bestIndividuals)
             {  //preiau ultimul individ de pe primul front ( 0 )
                 Configuration configuration = new Configuration();
@@ -196,7 +205,7 @@ namespace GeneticAlgorithms
                         allConfigurations.Add(mutatedConfiguration);
 
                         //rulare simulator doar pt mutatedConfiguration
-                        Console.WriteLine("gen: {0} mutated configuration ", currentGeneration);
+                       
                         var newSimulatedConfigurations = sim.Run(new List<Configuration> { mutatedConfiguration }, selectedTraces);
                         double ipc_average = 0, power_average = 0, energy_average = 0;
                         foreach (var item in newSimulatedConfigurations)
@@ -221,11 +230,14 @@ namespace GeneticAlgorithms
                     }
                 }
             }
+
+        }
+        private void DoCrossoverForBestIndividuals()
+        {
             int length = firstFront.Count;
 
             int numberOfConfigurations = allConfigurations.Count;
-            //nu stiu sigur daca populationSize,trebuie revazut
-            //se face crossover
+
             while (nsgaPopulation.Count < numberOfConfigurations)
             {
                 int index_parent1, index_parent2;
@@ -251,7 +263,7 @@ namespace GeneticAlgorithms
                     List<Configuration> resultedConfigurations = Crossover(parent1, parent2);
                     allConfigurations.AddRange(resultedConfigurations);
 
-                    Console.WriteLine("gen: {0} crossover configurations", currentGeneration);
+                  
                     var newSimulatedConfigurations = sim.Run(resultedConfigurations, selectedTraces);
 
                     foreach (var cfg in resultedConfigurations)
@@ -279,11 +291,7 @@ namespace GeneticAlgorithms
                     }
                 }
             }
-
-            StoreResults();
         }
-
-
         private void KeepNondominatedIndividuals()
         {
             nsgaPopulation.RemoveAll(item => !bestIndividuals.Contains(item));

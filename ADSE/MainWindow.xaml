@@ -13,7 +13,9 @@
                 <TextBlock HorizontalAlignment="Center" FontSize="18" Margin="0,5,0,5">Markers sample</TextBlock>
             </d3:Chart.Title>
             <d3:Plot>
-                <d3:CircleMarkerGraph Name="arch" Description="ipc"
+                <d3:CircleMarkerGraph Name="arch" Description="individuals"
+                                  ColorDescription="energy" SizeDescription="Age" Min="1" Max="20"/>
+                <d3:CircleMarkerGraph Name="best" Description="best-ipc" Color="Red"
                                   ColorDescription="energy" SizeDescription="Age" Min="1" Max="20"/>
                 <d3:DiamondMarkerGraph Name="pop" Description="Population" ColorDescription="Population" SizeDescription="Age" Min="1" Max="20"/>
             </d3:Plot>
