@@ -15,7 +15,7 @@ namespace GeneticAlgorithms
         private int currentConfigurationId = 0;
         private PsatSim sim;
         private Random random;
-        private SimulationResults simulationResults;
+        public SimulationResults simulationResults;
         private List<string> selectedTraces;
         private int individualID { get { return id++; } }
         int populationSize = 5;
@@ -27,7 +27,7 @@ namespace GeneticAlgorithms
         public List<GeneticIndividual> archive = new List<GeneticIndividual>();
         List<SimulatedConfiguration> results = new List<SimulatedConfiguration>();
 
-        List<GeneticIndividual> nsgaPopulation = new List<GeneticIndividual>();
+        public List<GeneticIndividual> nsgaPopulation = new List<GeneticIndividual>();
         List<Configuration> allConfigurations = new List<Configuration>();
 
 
@@ -279,6 +279,8 @@ namespace GeneticAlgorithms
                     }
                 }
             }
+
+            StoreResults();
         }
 
 

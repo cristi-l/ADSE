@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GeneticAlgorithms
 {
-    class SimulationResults
+    public class SimulationResults
     {
         public List<GeneticIndividual> nsgaPopulation = new List<GeneticIndividual>();
         public List<Configuration> allConfigurations = new List<Configuration>();

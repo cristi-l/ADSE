@@ -18,7 +18,8 @@
                 <d3:DiamondMarkerGraph Name="pop" Description="Population" ColorDescription="Population" SizeDescription="Age" Min="1" Max="20"/>
             </d3:Plot>
         </d3:Chart>
-        <Button Click="button_Click" x:Name="button" Content="Next Generation"  HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" Width="90" Height="47"/>
+        <Button Click="button_Click" x:Name="button" Content="Next Generation &#xD;&#xA;SPEA2"  HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" Width="90" Height="57"/>
         <Button Click="button1_Click" x:Name="button1" Content="init" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Width="90" Height="38"/>
+        <Button Click="button2_Click" x:Name="button_Copy" Content="Next Generation &#xA;NSGA2"  HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top" Width="90" Height="57"/>
     </Grid>
 </Window>

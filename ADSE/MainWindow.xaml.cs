@@ -71,7 +71,20 @@ namespace ADSE
 			arch.PlotXY(x, y);
 		}
 
-		private void button1_Click(object sender, RoutedEventArgs e)
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            ga.NSGA2(ga.nsgaPopulation, 0);
+            x = new double[ga.simulationResults.bestIndividuals.Count];
+            y = x;
+            for (int i = 0; i < ga.simulationResults.bestIndividuals.Count; i++)
+            {
+                x[i] = 1.0/(ga.simulationResults.bestIndividuals[i]).Ipc;
+                y[i] = (ga.simulationResults.bestIndividuals[i]).Energy;
+            }
+            arch.PlotXY(x, y);
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
 		{
 			button1.IsEnabled = false;
 			ga.InitRandomPopulation(selectedTraces);
