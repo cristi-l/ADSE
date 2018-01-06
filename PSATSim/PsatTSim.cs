@@ -40,7 +40,8 @@ namespace PSATSim
 					Arguments=Arguments,
 					WorkingDirectory=@"C:\Program Files (x86)\PSATSim",
 					UseShellExecute = true,
-					CreateNoWindow = true
+					CreateNoWindow = true,
+                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
 				}
 			};
 		    FileBuilder.WriteXML(configurations, selectedTraces, Input);

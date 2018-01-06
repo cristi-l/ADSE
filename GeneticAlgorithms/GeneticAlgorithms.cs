@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace GeneticAlgorithms
 {
@@ -18,18 +20,17 @@ namespace GeneticAlgorithms
         public SimulationResults simulationResults;
         private List<string> selectedTraces;
         private int individualID { get { return id++; } }
-        int populationSize = 5;
+        int populationSize = 20;
         int noOfGenerations = 2;
         public List<Configuration> population = new List<Configuration>();
 
-        List<GeneticIndividual> firstFront = new List<GeneticIndividual>();
+        public List<GeneticIndividual> firstFront = new List<GeneticIndividual>();
         List<GeneticIndividual> bestIndividuals = new List<GeneticIndividual>();
         public List<GeneticIndividual> archive = new List<GeneticIndividual>();
         List<SimulatedConfiguration> results = new List<SimulatedConfiguration>();
 
         public List<GeneticIndividual> nsgaPopulation = new List<GeneticIndividual>();
         List<Configuration> allConfigurations = new List<Configuration>();
-
 
         public GeneticAlgorithms(List<string> selectedTraces)
         {
@@ -110,7 +111,7 @@ namespace GeneticAlgorithms
             return child;
         }
 
-        public void NSGA2(List<GeneticIndividual> population, int currentGeneration)
+        public void NSGA2(List<GeneticIndividual> population, int currentGeneration, ProgressBar progressBar)
         {
             Clear();
             FindBestIndividuals(population);
@@ -120,7 +121,31 @@ namespace GeneticAlgorithms
             StoreResults();
         }
 
-        private void FindBestIndividuals(List<GeneticIndividual> population)
+        public void FindFirstFront(List<GeneticIndividual> population)
+        {
+            firstFront.Clear();
+            foreach (var individual in population)
+            {
+                individual.FrontNumber = 0;
+                foreach (var otherIndividual in population)
+                {
+                    if (individual != otherIndividual)
+                    {
+                        if (((1.0 / otherIndividual.Ipc < (1.0 / individual.Ipc) && otherIndividual.Energy <= individual.Energy) || ((1.0 / otherIndividual.Ipc) <= (1.0 / individual.Ipc) && otherIndividual.Energy < individual.Energy)))
+                        {
+                            individual.FrontNumber++;
+                        }
+                    }
+                }
+                //Nondominated
+                if (individual.FrontNumber == 0)
+                {
+                    firstFront.Add(individual);
+                }
+            }
+        }
+
+        public void FindBestIndividuals(List<GeneticIndividual> population)
         {
             foreach (var individual in population)
             {
@@ -179,6 +204,11 @@ namespace GeneticAlgorithms
                     break;
                 }
             }
+        }
+        public void StoreBestIndividuals()
+        {
+            simulationResults.bestIndividuals.AddRange(bestIndividuals);
+            simulationResults.firstFront.AddRange(firstFront);
         }
         private void DoMutationAndSimulation()
         {

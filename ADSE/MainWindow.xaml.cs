@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using GeneticAlgorithms;
 using InteractiveDataDisplay.WPF;
+using System.Windows.Threading;
+
 namespace ADSE
 {
     /// <summary>
@@ -60,7 +62,7 @@ namespace ADSE
 
 		private void button_Click(object sender, RoutedEventArgs e)
 		{
-			ga.SPEA2();
+            ga.SPEA2();
 			x = new double[ga.population.Count];
 			y = new double[ga.population.Count];
 			for (int i = 0; i < ga.population.Count; i++)
@@ -69,28 +71,41 @@ namespace ADSE
 				y[i] = ((GeneticIndividual)ga.population[i]).Energy;
 			}
 			arch.PlotXY(x, y);
-		}
+        }
 
         private void button2_Click(object sender, RoutedEventArgs e)
         {
-            ga.NSGA2(ga.nsgaPopulation, 0);
+            ga.NSGA2(ga.nsgaPopulation, 0, pbStatus);
+            ga.FindFirstFront(ga.simulationResults.nsgaPopulation);
+            ga.simulationResults.firstFront.Clear();
+            ga.StoreBestIndividuals();
+
             x = new double[ga.simulationResults.nsgaPopulation.Count];
             y = new double[ga.simulationResults.nsgaPopulation.Count];
             for (int i = 0; i < ga.simulationResults.nsgaPopulation.Count; i++)
             {
-                x[i] = (ga.simulationResults.nsgaPopulation[i]).Ipc;
+                x[i] = (1.0/(ga.simulationResults.nsgaPopulation[i]).Ipc);
                 y[i] = (ga.simulationResults.nsgaPopulation[i]).Energy;
             }
             arch.PlotXY(x, y);
 
-            x = new double[ga.simulationResults.bestIndividuals.Count];
-            y = new double[ga.simulationResults.bestIndividuals.Count];
-            for (int i = 0; i < ga.simulationResults.bestIndividuals.Count; i++)
+            x = new double[ga.simulationResults.firstFront.Count];
+            y = new double[ga.simulationResults.firstFront.Count];
+            for (int i = 0; i < ga.simulationResults.firstFront.Count; i++)
             {
-                x[i] = (ga.simulationResults.bestIndividuals[i]).Ipc;
-                y[i] = (ga.simulationResults.bestIndividuals[i]).Energy;
+                x[i] = (1.0 / (ga.simulationResults.firstFront[i]).Ipc);
+                y[i] = (ga.simulationResults.firstFront[i]).Energy;
             }
-            best.Plot(x, y);
+            first.PlotXY(x, y);
+
+            //x = new double[ga.simulationResults.bestIndividuals.Count];
+            //y = new double[ga.simulationResults.bestIndividuals.Count];
+            //for (int i = 0; i < ga.simulationResults.bestIndividuals.Count; i++)
+            //{
+            //    x[i] = (ga.simulationResults.bestIndividuals[i]).Ipc;
+            //    y[i] = (ga.simulationResults.bestIndividuals[i]).Energy;
+            //}
+            //best.Plot(x, y);
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -105,7 +120,6 @@ namespace ADSE
 				y[i] = ((GeneticIndividual)ga.population[i]).Energy;
 			}
 			arch.PlotXY(x, y);
-			
-		}
+        }
 	}
 }
