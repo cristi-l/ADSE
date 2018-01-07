@@ -93,7 +93,14 @@ namespace ADSE
 					y[i] = ((GeneticIndividual)ga.population[i]).Energy;
 				}
 				population.PlotXY(x, y);
-				
+				/*x = new double[ga.archive.Count];
+				y = new double[ga.archive.Count];
+				for (int i = 0; i < ga.archive.Count; i++)
+				{
+					x[i] = ((GeneticIndividual)ga.archive[i]).Ipc;
+					y[i] = ((GeneticIndividual)ga.archive[i]).Energy;
+				}
+				archive.PlotXY(x, y);*/
 				x = new double[ga.firstFront.Count];
 				y = new double[ga.firstFront.Count];
 				for (int i = 0; i < ga.firstFront.Count; i++)
@@ -102,6 +109,7 @@ namespace ADSE
 					y[i] = ((GeneticIndividual)ga.firstFront[i]).Energy;
 				}
 				best.PlotXY(x, y);
+				
 
 			}
 		}

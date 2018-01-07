@@ -17,6 +17,8 @@
                                   ColorDescription="energy" SizeDescription="Age" Min="1" Max="20"/>
                 <d3:CircleMarkerGraph Name="best" Description="First Front" Color="Red"
                                   ColorDescription="cpi" SizeDescription="Age" Min="1" Max="20"/>
+                <d3:TriangleMarkerGraph Name="archive" Description="Archive" Color="Blue"
+                                  ColorDescription="Archive" SizeDescription="Age" Min="1" Max="20"/>
             </d3:Plot>
         </d3:Chart>
         <Button Click="button_Click" x:Name="button" Content="Next Generation &#xD;&#xA;SPEA2"  HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" Width="90" Height="57"/>

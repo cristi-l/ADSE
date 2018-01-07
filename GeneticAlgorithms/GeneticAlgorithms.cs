@@ -13,7 +13,7 @@ namespace GeneticAlgorithms
     public class GeneticAlgorithms
     {
         private int id = 0;
-        private double mutationRate = 0.01;
+        private double mutationRate = 0.4;
         private int currentConfigurationId = 0;
         private PsatSim sim;
         private Random random;
@@ -358,16 +358,19 @@ namespace GeneticAlgorithms
         private List<Configuration> Reproduce(List<GeneticIndividual> selected)
         {
             List<Configuration> children = new List<Configuration>();
-            /*for(int i = 0; i < selected.Count-1; i++)
-			{
-				children.AddRange(Crossover(selected[i], selected[i + 1]));
-			}*/
-            while (children.Count < populationSize)
+			
+			while (children.Count < populationSize)
             {
-                int i = r.Next(selected.Count);
-                int j = r.Next(selected.Count);
-                if (i != j)
-                    children.AddRange(Crossover(selected[i], selected[j]));
+				int i = r.Next(selected.Count);
+				int j = r.Next(selected.Count);
+
+				var p1 = (selected[i].Fitness < selected[j].Fitness ? selected[i] : selected[j]);
+				i = r.Next(selected.Count);
+				j = r.Next(selected.Count);
+
+				var p2 = (selected[i].Fitness < selected[j].Fitness ? selected[i] : selected[j]);
+				if (p1!=p2)
+                    children.AddRange(Crossover(p1, p2));
             }
             for (int i = 0; i < children.Count; i++)
             {
