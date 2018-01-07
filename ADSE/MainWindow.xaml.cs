@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using GeneticAlgorithms;
 using InteractiveDataDisplay.WPF;
 using System.Windows.Threading;
+using System.IO;
 
 namespace ADSE
 {
@@ -27,12 +28,9 @@ namespace ADSE
 		bool flag;
 		GeneticAlgorithms.GeneticAlgorithms ga;
 		double[] x, y;
-		List<string> selectedTraces = new List<string>
-			{
-				"Traces\\fpppp.tra",
-				//"Traces\\applu.tra",
-				//"Traces\\toast.tra"
-			};
+		List<string> selectedTraces = new List<string>();
+			
+		
 		public MainWindow()
         {
             InitializeComponent();
@@ -41,11 +39,29 @@ namespace ADSE
             //trebuie selectate din interfata precum si populationCount
            
 			//generare configuratii random
-			ga = new GeneticAlgorithms.GeneticAlgorithms(selectedTraces);
-			//ga.InitRandomPopulation(selectedTraces);
-			//ga.SPEA2();
-			flag = true;
+			
 
+			flag = true;
+			var dir= Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+			var dirInfo = new DirectoryInfo(dir+"\\PSATSim\\Traces");
+			FileInfo[] info = dirInfo.GetFiles("*.tra");
+			for(int i=0;i<info.Length;i++)
+			{
+				listView.Items.Add(new CheckBox()
+				{
+					Name ="Trace"+ i,
+					Content = info[i].Name
+				});
+			}
+			foreach (var item in listView.Items)
+			{
+				if (item.GetType() == typeof(CheckBox))
+					((CheckBox)item).Checked += checkBox_Checked;
+			}
+			button.IsEnabled = false;
+			button1.IsEnabled = false;
+			button_Copy.IsEnabled = false;
+			
         }
 
         private List<Configuration> CreateRandomConfigurations(int count)
@@ -76,6 +92,7 @@ namespace ADSE
 					y[i] = ((GeneticIndividual)ga.population[i]).Energy;
 				}
 				population.PlotXY(x, y);
+				
 				x = new double[ga.firstFront.Count];
 				y = new double[ga.firstFront.Count];
 				for (int i = 0; i < ga.firstFront.Count; i++)
@@ -119,8 +136,25 @@ namespace ADSE
 			}
 		}
 
+		private void checkBox_Checked(object sender, RoutedEventArgs e)
+		{
+			selectedTraces.Clear();
+			foreach (var item in listView.Items)
+			{
+				if (item.GetType() == typeof(CheckBox))
+					if ((bool)((CheckBox)item).IsChecked)
+					{
+						selectedTraces.Add("Traces\\"+((CheckBox)item).Content.ToString());
+					}
+			}
+			button.IsEnabled = true;
+			button1.IsEnabled = true;
+			button_Copy.IsEnabled = true;
+		}
+
 		private async void button1_Click(object sender, RoutedEventArgs e)
 		{
+			ga = new GeneticAlgorithms.GeneticAlgorithms(selectedTraces);
 			if (flag == true)
 			{
 				flag = false;

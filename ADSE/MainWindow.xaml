@@ -23,5 +23,10 @@
         <Button Click="button1_Click" x:Name="button1" Content="init" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Width="90" Height="38"/>
         <Button Click="button2_Click" x:Name="button_Copy" Content="Next Generation &#xA;NSGA2"  HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top" Width="90" Height="57"/>
         <ProgressBar IsIndeterminate="False" HorizontalAlignment="Left" Height="10" Margin="10,4,0,0" VerticalAlignment="Top" Width="150" RenderTransformOrigin="0.5,0.5" Name="pbStatus" Minimum="0" Maximum="100"/>
+        <ListView x:Name="listView" HorizontalAlignment="Left" Height="261" Margin="10,243,0,0" VerticalAlignment="Top" Width="90">
+
+
+        </ListView>
+
     </Grid>
 </Window>
