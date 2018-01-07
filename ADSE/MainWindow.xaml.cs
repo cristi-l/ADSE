@@ -24,7 +24,7 @@ namespace ADSE
     /// </summary>
     public partial class MainWindow : Window
     {
-
+		bool flag;
 		GeneticAlgorithms.GeneticAlgorithms ga;
 		double[] x, y;
 		List<string> selectedTraces = new List<string>
@@ -44,7 +44,7 @@ namespace ADSE
 			ga = new GeneticAlgorithms.GeneticAlgorithms(selectedTraces);
 			//ga.InitRandomPopulation(selectedTraces);
 			//ga.SPEA2();
-            
+			flag = true;
 
         }
 
@@ -60,75 +60,83 @@ namespace ADSE
             return result;
         }
 
-		private void button_Click(object sender, RoutedEventArgs e)
+		private async void button_Click(object sender, RoutedEventArgs e)
 		{
-			ga.SPEA2();
-			x = new double[ga.population.Count];
-			y = new double[ga.population.Count];
-			for (int i = 0; i < ga.population.Count; i++)
+			if (flag == true)
 			{
-				x[i] =	((GeneticIndividual)ga.population[i]).Ipc;
-				y[i] = ((GeneticIndividual)ga.population[i]).Energy;
+				flag = false;
+
+				await Task.Run(() => flag = ga.SPEA2());
+				//ga.SPEA2();
+				x = new double[ga.population.Count];
+				y = new double[ga.population.Count];
+				for (int i = 0; i < ga.population.Count; i++)
+				{
+					x[i] = ((GeneticIndividual)ga.population[i]).Ipc;
+					y[i] = ((GeneticIndividual)ga.population[i]).Energy;
+				}
+				population.PlotXY(x, y);
+				x = new double[ga.firstFront.Count];
+				y = new double[ga.firstFront.Count];
+				for (int i = 0; i < ga.firstFront.Count; i++)
+				{
+					x[i] = ((GeneticIndividual)ga.firstFront[i]).Ipc;
+					y[i] = ((GeneticIndividual)ga.firstFront[i]).Energy;
+				}
+				best.PlotXY(x, y);
+
 			}
-			population.PlotXY(x, y);
-			x = new double[ga.firstFront.Count];
-			y = new double[ga.firstFront.Count];
-			for (int i = 0; i < ga.firstFront.Count; i++)
-			{
-				x[i] = ((GeneticIndividual)ga.firstFront[i]).Ipc;
-				y[i] = ((GeneticIndividual)ga.firstFront[i]).Energy;
-			}
-			best.PlotXY(x, y);
-			
 		}
 
-        private void button2_Click(object sender, RoutedEventArgs e)
-        {
-            ga.NSGA2(ga.nsgaPopulation, 0, pbStatus);
-            ga.FindFirstFront(ga.simulationResults.nsgaPopulation);
-            ga.simulationResults.firstFront.Clear();
-            ga.StoreBestIndividuals();
-
-            x = new double[ga.simulationResults.nsgaPopulation.Count];
-            y = new double[ga.simulationResults.nsgaPopulation.Count];
-            for (int i = 0; i < ga.simulationResults.nsgaPopulation.Count; i++)
-            {
-                x[i] = (1.0/(ga.simulationResults.nsgaPopulation[i]).Ipc);
-                y[i] = (ga.simulationResults.nsgaPopulation[i]).Energy;
-            }
-            population.PlotXY(x, y);
-
-            x = new double[ga.simulationResults.firstFront.Count];
-            y = new double[ga.simulationResults.firstFront.Count];
-            for (int i = 0; i < ga.simulationResults.firstFront.Count; i++)
-            {
-                x[i] = (1.0 / (ga.simulationResults.firstFront[i]).Ipc);
-                y[i] = (ga.simulationResults.firstFront[i]).Energy;
-            }
-            best.PlotXY(x, y);
-
-            //x = new double[ga.simulationResults.bestIndividuals.Count];
-            //y = new double[ga.simulationResults.bestIndividuals.Count];
-            //for (int i = 0; i < ga.simulationResults.bestIndividuals.Count; i++)
-            //{
-            //    x[i] = (ga.simulationResults.bestIndividuals[i]).Ipc;
-            //    y[i] = (ga.simulationResults.bestIndividuals[i]).Energy;
-            //}
-            //best.Plot(x, y);
-        }
-
-        private void button1_Click(object sender, RoutedEventArgs e)
+		private async void button2_Click(object sender, RoutedEventArgs e)
 		{
-			button1.IsEnabled = false;
-			ga.InitRandomPopulation(selectedTraces);
-			x = new double[ga.population.Count];
-			y = new double[ga.population.Count];
-			for (int i = 0; i < ga.population.Count; i++)
+			if (flag == true)
 			{
-				x[i] = ((GeneticIndividual)ga.population[i]).Ipc;
-				y[i] = ((GeneticIndividual)ga.population[i]).Energy;
+				flag = false;
+				await Task.Run(() => flag = ga.NSGA2(ga.nsgaPopulation, 0, pbStatus));
+
+				ga.FindFirstFront(ga.simulationResults.nsgaPopulation);
+				ga.simulationResults.firstFront.Clear();
+				ga.StoreBestIndividuals();
+
+				x = new double[ga.simulationResults.nsgaPopulation.Count];
+				y = new double[ga.simulationResults.nsgaPopulation.Count];
+				for (int i = 0; i < ga.simulationResults.nsgaPopulation.Count; i++)
+				{
+					x[i] = (1.0 / (ga.simulationResults.nsgaPopulation[i]).Ipc);
+					y[i] = (ga.simulationResults.nsgaPopulation[i]).Energy;
+				}
+				population.PlotXY(x, y);
+
+				x = new double[ga.simulationResults.firstFront.Count];
+				y = new double[ga.simulationResults.firstFront.Count];
+				for (int i = 0; i < ga.simulationResults.firstFront.Count; i++)
+				{
+					x[i] = (1.0 / (ga.simulationResults.firstFront[i]).Ipc);
+					y[i] = (ga.simulationResults.firstFront[i]).Energy;
+				}
+				best.PlotXY(x, y);
 			}
-			best.PlotXY(x, y);
-        }
+		}
+
+		private async void button1_Click(object sender, RoutedEventArgs e)
+		{
+			if (flag == true)
+			{
+				flag = false;
+				await Task.Run(() => flag = ga.InitRandomPopulation(selectedTraces));
+				button1.IsEnabled = false;
+
+				
+				x = new double[ga.population.Count];
+				y = new double[ga.population.Count];
+				for (int i = 0; i < ga.population.Count; i++)
+				{
+					x[i] = ((GeneticIndividual)ga.population[i]).Ipc;
+					y[i] = ((GeneticIndividual)ga.population[i]).Energy;
+				}
+				best.PlotXY(x, y);
+			}
+		}
 	}
 }

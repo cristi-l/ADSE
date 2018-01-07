@@ -57,7 +57,7 @@ namespace GeneticAlgorithms
             }
             return new List<Configuration> { child1, child2 };
         }
-        public void InitRandomPopulation(List<string> selectedTraces)
+        public bool InitRandomPopulation(List<string> selectedTraces)
         {
             ConfigurationGenerator cg = new ConfigurationGenerator();
             for (int i = 0; i < populationSize; i++)
@@ -87,6 +87,7 @@ namespace GeneticAlgorithms
                 }
                 nsgaPopulation.Add(new GeneticIndividual(population[i], ((GeneticIndividual)population[i]).Ipc, ((GeneticIndividual)population[i]).Power, ((GeneticIndividual)population[i]).Energy));
             }
+			return true;
         }
 
         private void StoreResults()
@@ -111,7 +112,7 @@ namespace GeneticAlgorithms
             return child;
         }
 
-        public void NSGA2(List<GeneticIndividual> population, int currentGeneration, ProgressBar progressBar)
+        public bool NSGA2(List<GeneticIndividual> population, int currentGeneration, ProgressBar progressBar)
         {
             Clear();
             FindBestIndividuals(population);
@@ -119,6 +120,7 @@ namespace GeneticAlgorithms
             DoMutationAndSimulation();
             DoCrossoverForBestIndividuals();
             StoreResults();
+			return true;
         }
 
         public void FindFirstFront(List<GeneticIndividual> population)
@@ -333,7 +335,7 @@ namespace GeneticAlgorithms
         }
 
         //http://www.cleveralgorithms.com/nature-inspired/evolution/spea.html
-        public void SPEA2()
+        public bool SPEA2()
         {
 			if (newPopulation.Count > 0)
 			{
@@ -348,7 +350,7 @@ namespace GeneticAlgorithms
            
             //population.Clear();
             newPopulation=Reproduce(archive);
-			
+			return true;
 
 		}
 		List<Configuration> newPopulation = new List<Configuration>();
