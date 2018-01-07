@@ -27,6 +27,7 @@
 
 
         </ListView>
+        <TextBox  PreviewTextInput="NumericOnly" x:Name="textBox" HorizontalAlignment="Left" Height="20" Margin="36,206,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="39"/>
 
     </Grid>
 </Window>

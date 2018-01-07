@@ -17,6 +17,7 @@ using GeneticAlgorithms;
 using InteractiveDataDisplay.WPF;
 using System.Windows.Threading;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace ADSE
 {
@@ -152,9 +153,22 @@ namespace ADSE
 			button_Copy.IsEnabled = true;
 		}
 
+
+
+		private void NumericOnly(object sender, TextCompositionEventArgs e)
+		{
+			e.Handled = IsNumeric(((TextBox)sender).Text+e.Text);
+		}
+		private bool IsNumeric(string str)
+		{
+			Regex regex = new Regex("[^0-9]"); //regex that matches disallowed text
+			return regex.IsMatch(str);
+		}
 		private async void button1_Click(object sender, RoutedEventArgs e)
 		{
-			ga = new GeneticAlgorithms.GeneticAlgorithms(selectedTraces);
+			int nr;
+			int.TryParse(textBox.Text, out nr);
+			ga = new GeneticAlgorithms.GeneticAlgorithms(selectedTraces,nr);
 			if (flag == true)
 			{
 				flag = false;

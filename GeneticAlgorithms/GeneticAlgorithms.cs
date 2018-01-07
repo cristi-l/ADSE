@@ -32,12 +32,13 @@ namespace GeneticAlgorithms
         public List<GeneticIndividual> nsgaPopulation = new List<GeneticIndividual>();
         List<Configuration> allConfigurations = new List<Configuration>();
 
-        public GeneticAlgorithms(List<string> selectedTraces)
+        public GeneticAlgorithms(List<string> selectedTraces,int populationSize)
         {
             this.selectedTraces = selectedTraces;
             sim = new PsatSim();
             random = new Random();
             simulationResults = new SimulationResults();
+			this.populationSize = populationSize;
         }
         static Random r = new Random();
         public List<Configuration> Crossover(Configuration parent1, Configuration parent2)
