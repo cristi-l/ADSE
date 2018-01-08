@@ -27,7 +27,7 @@ namespace ADSE
     public partial class MainWindow : Window
     {
 		bool flag;
-		GeneticAlgorithms.GeneticAlgorithms ga;
+		GeneticAlgorithms.GeneticAlgorithms geneticAlg;
 		double[] x, y;
 		List<string> selectedTraces = new List<string>();
 			
@@ -59,10 +59,10 @@ namespace ADSE
 				if (item.GetType() == typeof(CheckBox))
 					((CheckBox)item).Checked += checkBox_Checked;
 			}
-			button.IsEnabled = false;
-			button1.IsEnabled = false;
-			button_Copy.IsEnabled = false;
-			
+			buttonInit.IsEnabled = false;
+			buttonNSGA.IsEnabled = false;
+			buttonSPEA.IsEnabled = false;
+			buttonReset.IsEnabled = false;
         }
 
         private List<Configuration> CreateRandomConfigurations(int count)
@@ -77,36 +77,29 @@ namespace ADSE
             return result;
         }
 
-		private async void button_Click(object sender, RoutedEventArgs e)
+		private async void button_SPEA(object sender, RoutedEventArgs e)
 		{
 			if (flag == true)
 			{
 				flag = false;
-
-				await Task.Run(() => flag = ga.SPEA2());
+				buttonNSGA.IsEnabled = false;
+				await Task.Run(() => flag = geneticAlg.SPEA2());
 				//ga.SPEA2();
-				x = new double[ga.population.Count];
-				y = new double[ga.population.Count];
-				for (int i = 0; i < ga.population.Count; i++)
+				x = new double[geneticAlg.population.Count];
+				y = new double[geneticAlg.population.Count];
+				for (int i = 0; i < geneticAlg.population.Count; i++)
 				{
-					x[i] = ((GeneticIndividual)ga.population[i]).Ipc;
-					y[i] = ((GeneticIndividual)ga.population[i]).Energy;
+					x[i] = ((GeneticIndividual)geneticAlg.population[i]).Ipc;
+					y[i] = ((GeneticIndividual)geneticAlg.population[i]).Energy;
 				}
 				population.PlotXY(x, y);
-				/*x = new double[ga.archive.Count];
-				y = new double[ga.archive.Count];
-				for (int i = 0; i < ga.archive.Count; i++)
+
+				x = new double[geneticAlg.firstFront.Count];
+				y = new double[geneticAlg.firstFront.Count];
+				for (int i = 0; i < geneticAlg.firstFront.Count; i++)
 				{
-					x[i] = ((GeneticIndividual)ga.archive[i]).Ipc;
-					y[i] = ((GeneticIndividual)ga.archive[i]).Energy;
-				}
-				archive.PlotXY(x, y);*/
-				x = new double[ga.firstFront.Count];
-				y = new double[ga.firstFront.Count];
-				for (int i = 0; i < ga.firstFront.Count; i++)
-				{
-					x[i] = ((GeneticIndividual)ga.firstFront[i]).Ipc;
-					y[i] = ((GeneticIndividual)ga.firstFront[i]).Energy;
+					x[i] = ((GeneticIndividual)geneticAlg.firstFront[i]).Ipc;
+					y[i] = ((GeneticIndividual)geneticAlg.firstFront[i]).Energy;
 				}
 				best.PlotXY(x, y);
 				
@@ -114,32 +107,33 @@ namespace ADSE
 			}
 		}
 
-		private async void button2_Click(object sender, RoutedEventArgs e)
+		private async void button_NSGA(object sender, RoutedEventArgs e)
 		{
 			if (flag == true)
 			{
 				flag = false;
-				await Task.Run(() => flag = ga.NSGA2(ga.nsgaPopulation, 0, pbStatus));
+				buttonSPEA.IsEnabled = false;
+				await Task.Run(() => flag = geneticAlg.NSGA2(geneticAlg.nsgaPopulation, 0, pbStatus));
 
-				ga.FindFirstFront(ga.simulationResults.nsgaPopulation);
-				ga.simulationResults.firstFront.Clear();
-				ga.StoreBestIndividuals();
+				geneticAlg.FindFirstFront(geneticAlg.simulationResults.nsgaPopulation);
+				geneticAlg.simulationResults.firstFront.Clear();
+				geneticAlg.StoreBestIndividuals();
 
-				x = new double[ga.simulationResults.nsgaPopulation.Count];
-				y = new double[ga.simulationResults.nsgaPopulation.Count];
-				for (int i = 0; i < ga.simulationResults.nsgaPopulation.Count; i++)
+				x = new double[geneticAlg.simulationResults.nsgaPopulation.Count];
+				y = new double[geneticAlg.simulationResults.nsgaPopulation.Count];
+				for (int i = 0; i < geneticAlg.simulationResults.nsgaPopulation.Count; i++)
 				{
-					x[i] = (1.0 / (ga.simulationResults.nsgaPopulation[i]).Ipc);
-					y[i] = (ga.simulationResults.nsgaPopulation[i]).Energy;
+					x[i] = (1.0 / (geneticAlg.simulationResults.nsgaPopulation[i]).Ipc);
+					y[i] = (geneticAlg.simulationResults.nsgaPopulation[i]).Energy;
 				}
 				population.PlotXY(x, y);
 
-				x = new double[ga.simulationResults.firstFront.Count];
-				y = new double[ga.simulationResults.firstFront.Count];
-				for (int i = 0; i < ga.simulationResults.firstFront.Count; i++)
+				x = new double[geneticAlg.simulationResults.firstFront.Count];
+				y = new double[geneticAlg.simulationResults.firstFront.Count];
+				for (int i = 0; i < geneticAlg.simulationResults.firstFront.Count; i++)
 				{
-					x[i] = (1.0 / (ga.simulationResults.firstFront[i]).Ipc);
-					y[i] = (ga.simulationResults.firstFront[i]).Energy;
+					x[i] = (1.0 / (geneticAlg.simulationResults.firstFront[i]).Ipc);
+					y[i] = (geneticAlg.simulationResults.firstFront[i]).Energy;
 				}
 				best.PlotXY(x, y);
 			}
@@ -156,9 +150,8 @@ namespace ADSE
 						selectedTraces.Add("Traces\\"+((CheckBox)item).Content.ToString());
 					}
 			}
-			button.IsEnabled = true;
-			button1.IsEnabled = true;
-			button_Copy.IsEnabled = true;
+			buttonInit.IsEnabled = true;
+			
 		}
 
 
@@ -172,24 +165,35 @@ namespace ADSE
 			Regex regex = new Regex("[^0-9]"); //regex that matches disallowed text
 			return regex.IsMatch(str);
 		}
-		private async void button1_Click(object sender, RoutedEventArgs e)
+
+		private void buttonReset_Click(object sender, RoutedEventArgs e)
+		{
+			geneticAlg.ClearAll();
+			
+			buttonInit.IsEnabled = false;
+			buttonNSGA.IsEnabled = false;
+			buttonSPEA.IsEnabled = false;
+		}
+
+		private async void button_Init(object sender, RoutedEventArgs e)
 		{
 			int nr;
 			int.TryParse(textBox.Text, out nr);
-			ga = new GeneticAlgorithms.GeneticAlgorithms(selectedTraces,nr);
+			geneticAlg = new GeneticAlgorithms.GeneticAlgorithms(selectedTraces,nr);
 			if (flag == true)
 			{
 				flag = false;
-				await Task.Run(() => flag = ga.InitRandomPopulation(selectedTraces));
-				button1.IsEnabled = false;
-
-				
-				x = new double[ga.population.Count];
-				y = new double[ga.population.Count];
-				for (int i = 0; i < ga.population.Count; i++)
+				await Task.Run(() => flag = geneticAlg.InitRandomPopulation(selectedTraces));
+				buttonInit.IsEnabled = false;
+				buttonReset.IsEnabled = true;
+				buttonSPEA.IsEnabled = true;
+				buttonNSGA.IsEnabled = true;
+				x = new double[geneticAlg.population.Count];
+				y = new double[geneticAlg.population.Count];
+				for (int i = 0; i < geneticAlg.population.Count; i++)
 				{
-					x[i] = ((GeneticIndividual)ga.population[i]).Ipc;
-					y[i] = ((GeneticIndividual)ga.population[i]).Energy;
+					x[i] = ((GeneticIndividual)geneticAlg.population[i]).Ipc;
+					y[i] = ((GeneticIndividual)geneticAlg.population[i]).Energy;
 				}
 				best.PlotXY(x, y);
 			}

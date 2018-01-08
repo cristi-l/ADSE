@@ -14,14 +14,14 @@ namespace GeneticAlgorithms
     {
         private int id = 0;
         private double mutationRate = 0.4;
-        private int currentConfigurationId = 0;
+
         private PsatSim sim;
         private Random random;
         public SimulationResults simulationResults;
         private List<string> selectedTraces;
         private int individualID { get { return id++; } }
         int populationSize = 12;
-        int noOfGenerations = 2;
+
         public List<Configuration> population = new List<Configuration>();
 
         public List<GeneticIndividual> firstFront = new List<GeneticIndividual>();
@@ -333,7 +333,18 @@ namespace GeneticAlgorithms
         {
             bestIndividuals.Clear();
             firstFront.Clear();
+
         }
+		public void ClearAll()
+		{
+			bestIndividuals.Clear();
+			firstFront.Clear();
+			population.Clear();
+			archive.Clear();
+			selectedTraces.Clear();
+			nsgaPopulation.Clear();
+			allConfigurations.Clear();
+		}
 
         //http://www.cleveralgorithms.com/nature-inspired/evolution/spea.html
         public bool SPEA2()

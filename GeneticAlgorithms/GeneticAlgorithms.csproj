@@ -50,12 +50,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GeneticAlgorithms.cs" />
-    <Compile Include="GeneticIndividual.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimulationResults.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PSATSim\PSATSim.csproj">

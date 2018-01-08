@@ -10,26 +10,26 @@
     <Grid Margin="0,0,0,0">
         <d3:Chart x:Name="myChart" Margin="100,5,0,10" HorizontalAlignment="Left" Width="968">
             <d3:Chart.Title>
-                <TextBlock HorizontalAlignment="Center" FontSize="18" Margin="0,5,0,5">Markers sample</TextBlock>
+                <TextBlock HorizontalAlignment="Center" FontSize="18" Margin="0,5,0,5">Current generation</TextBlock>
             </d3:Chart.Title>
             <d3:Plot>
                 <d3:CircleMarkerGraph Name="population" Description="individuals"
                                   ColorDescription="energy" SizeDescription="Age" Min="1" Max="20"/>
                 <d3:CircleMarkerGraph Name="best" Description="First Front" Color="Red"
                                   ColorDescription="cpi" SizeDescription="Age" Min="1" Max="20"/>
-                <d3:TriangleMarkerGraph Name="archive" Description="Archive" Color="Blue"
-                                  ColorDescription="Archive" SizeDescription="Age" Min="1" Max="20"/>
             </d3:Plot>
         </d3:Chart>
-        <Button Click="button_Click" x:Name="button" Content="Next Generation &#xD;&#xA;SPEA2"  HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" Width="90" Height="57"/>
-        <Button Click="button1_Click" x:Name="button1" Content="init" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Width="90" Height="38"/>
-        <Button Click="button2_Click" x:Name="button_Copy" Content="Next Generation &#xA;NSGA2"  HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top" Width="90" Height="57"/>
+        <Button Click="button_SPEA" x:Name="buttonSPEA" Content="Next Generation &#xD;&#xA;SPEA2"  HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" Width="90" Height="57"/>
+        <Button Click="button_Init" x:Name="buttonInit" Content="init" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Width="90" Height="38"/>
+        <Button Click="button_NSGA" x:Name="buttonNSGA" Content="Next Generation &#xA;NSGA2"  HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top" Width="90" Height="57"/>
         <ProgressBar IsIndeterminate="False" HorizontalAlignment="Left" Height="10" Margin="10,4,0,0" VerticalAlignment="Top" Width="150" RenderTransformOrigin="0.5,0.5" Name="pbStatus" Minimum="0" Maximum="100"/>
-        <ListView x:Name="listView" HorizontalAlignment="Left" Height="261" Margin="10,243,0,0" VerticalAlignment="Top" Width="90">
+        <ListView x:Name="listView" HorizontalAlignment="Left" Height="208" Margin="10,296,0,0" VerticalAlignment="Top" Width="90">
 
 
         </ListView>
-        <TextBox  PreviewTextInput="NumericOnly" x:Name="textBox" HorizontalAlignment="Left" Height="20" Margin="36,206,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="39"/>
+        <TextBox  PreviewTextInput="NumericOnly" x:Name="textBox" HorizontalAlignment="Left" Height="20" Margin="33,248,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="39"/>
+        <Label x:Name="label" Content="Population size" HorizontalAlignment="Left" Margin="10,221,0,0" VerticalAlignment="Top" Height="43" Width="90"/>
+        <Button Click="buttonReset_Click" x:Name="buttonReset" Content="Reset" HorizontalAlignment="Left" Margin="10,201,0,0" VerticalAlignment="Top" Width="90"/>
 
     </Grid>
 </Window>
